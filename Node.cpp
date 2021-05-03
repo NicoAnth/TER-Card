@@ -25,11 +25,3 @@ void NodeClass::execTransaction(User sender, User receiver, int amount)
 {
 
 }
-
-
-//Here for a while
-int main()
-
-{
-  return 0;
-}

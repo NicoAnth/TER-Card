@@ -4,8 +4,8 @@ PROJECT_SRC = .
 vpath %.cpp $(PROJECT_SRC)
 
 ########################################################################
-SRCS = Node.cpp
-SRCS += StakePool.cpp User.cpp
+SRCS = Main.cpp
+SRCS += Node.cpp StakePool.cpp User.cpp
 
 
 ########################################################################

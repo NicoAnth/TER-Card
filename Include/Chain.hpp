@@ -1,6 +1,6 @@
-#include <list>
 #include "Block.hpp"
+#include <QList>
 
 class Chain {
-  std::list<Block> blockchain;
+  QList<Block> blockchain;
 };

@@ -1,13 +1,13 @@
-#include <list>
+#include <QList>
 #include "Chain.hpp"
 #include "StakePool.hpp"
 
 //I still can't believe I lost 2 hours because Node was already taken and my compilo didn't say anything
 class NodeClass {
 public:
-  std::list<User> users;
-  std::list<Chain> chain;
-  static std::list<int> bufferTransactions;
+  QList<User> users;
+  QList<Chain> chain;
+  static QList<int> bufferTransactions;
 
   int electSlotLeader(void);
 

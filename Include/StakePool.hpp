@@ -3,12 +3,12 @@
 #include "User.hpp"
 #endif
 
-#include <map>
+#include <QMap>
 
 class StakePool {
 
 public:
-  std::map<User,int> enrolled;
+  QMap<User,int> enrolled;
   int pledge;
   User poolOwner;
   int stakes;

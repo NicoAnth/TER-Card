@@ -1,6 +1,6 @@
 #ifndef SP
 #define SP
-#include "StakePool.hpp"
+#include "Include/StakePool.hpp"
 #endif
 
 User StakePool::getOwner()

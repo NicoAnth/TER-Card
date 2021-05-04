@@ -1,14 +1,23 @@
 #ifndef Node
-#include "Node.hpp"
+#include "Include/Node.hpp"
 #define Node
 #endif
 
 #ifndef Simul
-#include "Simulation.hpp"
+#include "Include/Simulation.hpp"
 #define Simul
 #endif
 
-int main()
+#include <QApplication>
+#include <QMainWindow>
+#include <QWidget>
+#include <QPushButton>
+
+int main (int argc, char **argv )
 {
-  return 0;
+  QApplication app(argc, argv);
+  auto myWindow=new QWidget() ;
+  auto myButton = new QPushButton(myWindow) ;
+  myWindow->show();
+  return app.exec();
 }

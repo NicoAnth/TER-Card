@@ -16,8 +16,12 @@ public:
   // So we need to make it a pointer
   // Either that or we use a unique_ptr but I'll go with a friendly yet firm "No"
   NodeClass* connectedNode;
-
+  
   User();
 
   void generateMoney();
 };
+
+inline bool operator <(const User &u, const User &u2){
+  return u.useableStakes < u2.useableStakes;
+}

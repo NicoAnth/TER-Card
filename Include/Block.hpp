@@ -1,4 +1,5 @@
 #include "Transaction.hpp"
+#include <QList>
 
 class Block {
 public:
@@ -7,7 +8,7 @@ public:
   int hash_cur;
   int id;
 
-  std::list<Transaction> trans;
+  QList<Transaction> trans;
   //pointeur vers le bloc suivant ?
 
   //Pour le debug

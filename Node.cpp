@@ -23,5 +23,6 @@ Block NodeClass::createBlock(StakePool SP)
 
 void NodeClass::execTransaction(User sender, User receiver, int amount)
 {
-
+  sender.useableStakes -= amount;
+  receiver.useableStakes += amount;
 }

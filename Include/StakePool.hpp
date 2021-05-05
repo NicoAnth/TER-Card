@@ -13,9 +13,11 @@ public:
   User poolOwner;
   int stakes;
 
-  void addUser(User newMember);
+  //Return 1 on success, 0 on error
+  int addUser(User newMember, int stake);
   void removeUser(User newMember);
-  void updateUser(User newMember);
+  //Return 1 on success, 0 on error
+  int updateUser(User newMember, int newStake);
   void setPledge(int newPledge);
 
   User getOwner();

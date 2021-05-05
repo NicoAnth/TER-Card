@@ -56,12 +56,14 @@ SOURCES       = Main.cpp \
 		Node.cpp \
 		Simulation.cpp \
 		StakePool.cpp \
-		User.cpp 
+		User.cpp \
+		Block.cpp 
 OBJECTS       = Main.o \
 		Node.o \
 		Simulation.o \
 		StakePool.o \
-		User.o
+		User.o \
+		Block.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -147,7 +149,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		Node.cpp \
 		Simulation.cpp \
 		StakePool.cpp \
-		User.cpp
+		User.cpp \
+		Block.cpp
 QMAKE_TARGET  = TER-Card
 DESTDIR       = 
 TARGET        = TER-Card
@@ -328,7 +331,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents Include/Block.hpp Include/Chain.hpp Include/Node.hpp Include/Simulation.hpp Include/StakePool.hpp Include/Transaction.hpp Include/User.hpp $(DISTDIR)/
-	$(COPY_FILE) --parents Main.cpp Node.cpp Simulation.cpp StakePool.cpp User.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents Main.cpp Node.cpp Simulation.cpp StakePool.cpp User.cpp Block.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -395,14 +398,21 @@ Node.o: Node.cpp Include/Node.hpp \
 		Include/StakePool.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Node.o Node.cpp
 
-Simulation.o: Simulation.cpp 
+Simulation.o: Simulation.cpp Include/Simulation.hpp \
+		Include/User.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Simulation.o Simulation.cpp
 
-StakePool.o: StakePool.cpp 
+StakePool.o: StakePool.cpp Include/StakePool.hpp \
+		Include/User.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o StakePool.o StakePool.cpp
 
 User.o: User.cpp Include/User.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o User.o User.cpp
+
+Block.o: Block.cpp Include/Block.hpp \
+		Include/Transaction.hpp \
+		Include/User.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Block.o Block.cpp
 
 ####### Install
 

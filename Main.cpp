@@ -17,7 +17,7 @@ int main (int argc, char **argv )
 {
   QApplication app(argc, argv);
   auto myWindow=new QWidget() ;
-  auto myButton = new QPushButton(myWindow) ;
+  auto myButton = new QPushButton(myWindow);
   myWindow->show();
   return app.exec();
 }

@@ -10,4 +10,5 @@ User::User()
   useableStakes = -1;
   pooledStakes = -1;
   connectedNode = NULL;
-}
+};
+

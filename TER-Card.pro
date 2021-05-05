@@ -26,5 +26,6 @@ HEADERS += Include/Block.hpp \
            Include/Simulation.hpp \
            Include/StakePool.hpp \
            Include/Transaction.hpp \
-           Include/User.hpp
-SOURCES += Main.cpp Node.cpp Simulation.cpp StakePool.cpp User.cpp Block.cpp
+           Include/User.hpp \
+           Include/Rsa.h
+SOURCES += Main.cpp Node.cpp Simulation.cpp StakePool.cpp User.cpp Block.cpp Rsa.cpp

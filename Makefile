@@ -57,13 +57,15 @@ SOURCES       = Main.cpp \
 		Simulation.cpp \
 		StakePool.cpp \
 		User.cpp \
-		Block.cpp 
+		Block.cpp \
+		Rsa.cpp 
 OBJECTS       = Main.o \
 		Node.o \
 		Simulation.o \
 		StakePool.o \
 		User.o \
-		Block.o
+		Block.o \
+		Rsa.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -145,12 +147,14 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		Include/Simulation.hpp \
 		Include/StakePool.hpp \
 		Include/Transaction.hpp \
-		Include/User.hpp Main.cpp \
+		Include/User.hpp \
+		Include/Rsa.h Main.cpp \
 		Node.cpp \
 		Simulation.cpp \
 		StakePool.cpp \
 		User.cpp \
-		Block.cpp
+		Block.cpp \
+		Rsa.cpp
 QMAKE_TARGET  = TER-Card
 DESTDIR       = 
 TARGET        = TER-Card
@@ -330,8 +334,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents Include/Block.hpp Include/Chain.hpp Include/Node.hpp Include/Simulation.hpp Include/StakePool.hpp Include/Transaction.hpp Include/User.hpp $(DISTDIR)/
-	$(COPY_FILE) --parents Main.cpp Node.cpp Simulation.cpp StakePool.cpp User.cpp Block.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents Include/Block.hpp Include/Chain.hpp Include/Node.hpp Include/Simulation.hpp Include/StakePool.hpp Include/Transaction.hpp Include/User.hpp Include/Rsa.h $(DISTDIR)/
+	$(COPY_FILE) --parents Main.cpp Node.cpp Simulation.cpp StakePool.cpp User.cpp Block.cpp Rsa.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -413,6 +417,9 @@ Block.o: Block.cpp Include/Block.hpp \
 		Include/Transaction.hpp \
 		Include/User.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Block.o Block.cpp
+
+Rsa.o: Rsa.cpp Include/Rsa.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Rsa.o Rsa.cpp
 
 ####### Install
 

@@ -1,12 +1,8 @@
 #include "Include/Rsa.h"
-#define ll long long
-
-using namespace std;
-
 
 // find gcd
-int gcd(int a, int b) {
-   int t;
+long long gcd(long long a, long long b) {
+   long long t;
    while(1) {
       t= a%b;
       if(t==0)
@@ -17,10 +13,10 @@ int gcd(int a, int b) {
 }
 
 //for checking that 1 < e < phi(n) and gcd(e, phi(n)) = 1; i.e., e and phi(n) are coprime.
-bool checkProperty(pair<ll,ll> publicKey, tuple<ll,ll,ll> privateKey){
+bool checkProperty(pair<long long,long long> publicKey, tuple<long long,long long,long long> privateKey){
 
-   ll phi = (get<0>(privateKey)-1)*(get<1>(privateKey)-1);
-   ll track;
+   long long phi = (get<0>(privateKey)-1)*(get<1>(privateKey)-1);
+   long long track;
    while(publicKey.second<phi) {
       track = gcd(publicKey.second,phi);
       if(track==1)
@@ -32,82 +28,87 @@ bool checkProperty(pair<ll,ll> publicKey, tuple<ll,ll,ll> privateKey){
 }
 
 //Encrypt RSA signature
-ll encrypt(ll msg, pair<ll,ll> publicKey,tuple<ll,ll,ll> privateKey ){
+long long encrypt(long long msg, pair<long long,long long> publicKey,tuple<long long,long long,long long> privateKey ){
 
-   ll c = pow(msg,get<2>(privateKey));
+   long long c = pow(msg,get<2>(privateKey));
    c = fmod(c,publicKey.first);
    return c;
 }
 
 //Decrypt RSA signature
-ll decrypt(ll msg,pair<ll,ll> publicKey ){
+long long decrypt(long long msg,pair<long long,long long> publicKey ){
 
-   ll d = pow(msg,get<1>(publicKey));
+   long long d = pow(msg,get<1>(publicKey));
    d = fmod(d,publicKey.first);
    return d;   
 }
 
-ll generatePrimeNumber(){
+long long generatePrimeNumber(){
 
    //Rand between 10 000 and 10 000 000
-   ll nb = rand()% 1000 + 10000;
+   long long nb = rand()% 1000 + 10000;
+   bool isPrime= false;
 
-   while(Miller(nb,150)){
+   //Peut-être implémenter Miller-Rabin plus tard ce serait plus sérieux
+   while(isPrime == false){
       nb = rand()% 1000 + 10000;
+      for (int i = 2; i <= nb / 2; ++i) {
+         if (nb % i == 0) {
+            isPrime = false;
+            break;
+         }
+         isPrime=true;
+      }
    }
    return nb;
 }
 
-//Compute a*b mod m
-ll mulmod(ll a, ll b, ll m){
-   ll x = 0,y = a % m;
-   while(b > 0) {
-      if(b%2 == 1) {
-         x = (x+y) % m;
-      }
-      y = (y*2) % m;
-      b /= 2;
-   }
-   return x % m;
-}
-// Compute e%m 
-ll modulo(ll base, ll e, ll m) {
-   ll x = 1;
-   ll y = base;
-   while(e > 0) {
-      if(e%2 == 1){
-         x = (x*y) % m;
-         y = (y*y) % m;
-         e = e/2;
-      }
-   }
-   return x % m;
-}
-
-// Miller-Rabin algorithm
-bool Miller(ll p, int iteration) {
-   if(p<2) {
-      return false;
-   }
-   if(p!=2 && p%2==0) {
-      return false;
-   }
-   ll s = p-1;
-   while(s%2 == 0) {
-      s/=2;
-   }
-   for(int i = 0; i < iteration; i++) {
-      ll a = rand() % (p-1) + 1, temp = s;
-      ll mod = modulo(a, temp, p);
-      while(temp != p-1 && mod != 1 && mod != p-1) {
-         mod = mulmod(mod, mod, p);
-         temp *= 2;
-      }
-      if(mod != p-1 && temp % 2 == 0) {
-         return false;
-      }
-   }
-   return true;
+//Compute inverse modular of a mod m
+long long modInverse(long long a, long long m)
+{
+    long long m0 = m;
+    long long y = 0, x = 1;
+ 
+    if (m == 1)
+        return 0;
+ 
+    while (a > 1) {
+        // q is quotient
+        long long q = a / m;
+        long long t = m;
+ 
+        // m is remainder now, process same as
+        // Euclid's algo
+        m = a % m, a = t;
+        t = y;
+ 
+        // Update y and x
+        y = x - q * y;
+        x = t;
+    }
+ 
+    // Make x positive
+    if (x < 0)
+        x += m0;
+ 
+    return x;
 }
 
+//Create both private and public key for RSA
+void createKeys(std::pair<long long, long long> &publicKey, std::tuple<long long, long long, long long> &privateKey){
+
+   srand (time(NULL));
+  long long p = generatePrimeNumber();
+  long long q = generatePrimeNumber();
+  long long n = p*q;
+  long long e = generatePrimeNumber();
+  long long phi = (p-1) * (q-1);
+  while(gcd(p-1,e) != 1 || gcd(q-1,e) !=1 || e>=phi){
+    e = generatePrimeNumber();
+  }
+  long long d = modInverse(e,phi);
+
+  publicKey = std::make_pair(n,e);
+  privateKey = std::make_tuple(p,q,d);
+}
 

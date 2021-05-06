@@ -390,6 +390,7 @@ Main.o: Main.cpp Include/Node.hpp \
 		Include/Block.hpp \
 		Include/Transaction.hpp \
 		Include/User.hpp \
+		Include/Rsa.h \
 		Include/StakePool.hpp \
 		Include/Simulation.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Main.o Main.cpp
@@ -399,23 +400,28 @@ Node.o: Node.cpp Include/Node.hpp \
 		Include/Block.hpp \
 		Include/Transaction.hpp \
 		Include/User.hpp \
+		Include/Rsa.h \
 		Include/StakePool.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Node.o Node.cpp
 
 Simulation.o: Simulation.cpp Include/Simulation.hpp \
-		Include/User.hpp
+		Include/User.hpp \
+		Include/Rsa.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Simulation.o Simulation.cpp
 
 StakePool.o: StakePool.cpp Include/StakePool.hpp \
-		Include/User.hpp
+		Include/User.hpp \
+		Include/Rsa.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o StakePool.o StakePool.cpp
 
-User.o: User.cpp Include/User.hpp
+User.o: User.cpp Include/User.hpp \
+		Include/Rsa.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o User.o User.cpp
 
 Block.o: Block.cpp Include/Block.hpp \
 		Include/Transaction.hpp \
-		Include/User.hpp
+		Include/User.hpp \
+		Include/Rsa.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Block.o Block.cpp
 
 Rsa.o: Rsa.cpp Include/Rsa.h

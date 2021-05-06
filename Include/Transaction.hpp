@@ -1,7 +1,6 @@
-#include <string>
-
 #ifndef Users
 #define Users
+#include <string>
 #include "User.hpp"
 #endif
 

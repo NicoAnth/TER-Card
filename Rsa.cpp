@@ -12,7 +12,7 @@ long long gcd(long long a, long long b) {
    }
 }
 
-//for checking that 1 < e < phi(n) and gcd(e, phi(n)) = 1; i.e., e and phi(n) are coprime.
+//Check that 1 < e < phi(n) and gcd(e, phi(n)) = 1; i.e., e and phi(n) are coprime.
 bool checkProperty(pair<long long,long long> publicKey, tuple<long long,long long,long long> privateKey){
 
    long long phi = (get<0>(privateKey)-1)*(get<1>(privateKey)-1);
@@ -27,31 +27,40 @@ bool checkProperty(pair<long long,long long> publicKey, tuple<long long,long lon
    return false;
 }
 
-//Encrypt RSA signature
-long long encrypt(long long msg, pair<long long,long long> publicKey,tuple<long long,long long,long long> privateKey ){
+//RSA signature encryption
+long long encrypt(long long msg, pair<long long,long long> publicKey,tuple<long long,long long,long long> privateKey){
 
-   long long c = pow(msg,get<2>(privateKey));
-   c = fmod(c,publicKey.first);
-   return c;
+   return modpow(msg,get<2>(privateKey),publicKey.first);
 }
 
-//Decrypt RSA signature
+//RSA signature decryption
 long long decrypt(long long msg,pair<long long,long long> publicKey ){
 
-   long long d = pow(msg,get<1>(publicKey));
-   d = fmod(d,publicKey.first);
-   return d;   
+   return modpow(msg,get<1>(publicKey),publicKey.first);  
+}
+
+//Compute base^exp mod modulus for large numbers
+long long modpow(long long base, long long exp, long long modulus) {
+  base %= modulus;
+  long long result = 1;
+  while (exp > 0) {
+    if (exp & 1) result = (result * base) % modulus;
+    base = (base * base) % modulus;
+    exp >>= 1;
+  }
+  return result;
 }
 
 long long generatePrimeNumber(){
 
-   //Rand between 10 000 and 10 000 000
-   long long nb = rand()% 1000 + 10000;
+   long long nb;
    bool isPrime= false;
 
    //Peut-être implémenter Miller-Rabin plus tard ce serait plus sérieux
    while(isPrime == false){
-      nb = rand()% 1000 + 10000;
+      
+      //Rand between 10 000 and 20 000
+      nb = rand()% 10000 + 10000;
       for (int i = 2; i <= nb / 2; ++i) {
          if (nb % i == 0) {
             isPrime = false;
@@ -111,4 +120,3 @@ void createKeys(std::pair<long long, long long> &publicKey, std::tuple<long long
   publicKey = std::make_pair(n,e);
   privateKey = std::make_tuple(p,q,d);
 }
-

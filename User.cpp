@@ -17,4 +17,12 @@ std::tuple<long long, long long, long long> User::getPrivateKey(){
   return privateKey;
 }
 
+std::pair<long long,Transaction> User::sendTransaction(Transaction t){
+  SHA256 sha;
+  std::string hash = sha(t.toString());
+  long long ll = std::stoll(hash);
+  long long signature = encrypt(ll,publicKey,privateKey);
+  return make_pair(signature,t);
+}
+
 

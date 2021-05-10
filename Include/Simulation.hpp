@@ -1,6 +1,6 @@
-#ifndef Users
-#define Users
+#ifndef SIMULATION_H
+#define SIMULATION_H
 #include "User.hpp"
-#endif
 
 void giveMoney(User mUser, int amount);
+#endif

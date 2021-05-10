@@ -1,7 +1,5 @@
-#ifndef Node
 #include "Include/Node.hpp"
-#define Node
-#endif
+#include "Include/StakePool.hpp"
 
 using namespace std;
 
@@ -16,7 +14,7 @@ Block NodeClass::createBlock(int Uid)
   return b;
 }
 
-Block NodeClass::createBlock(StakePool SP)
+Block NodeClass::createBlock(StakePool& SP)
 {
   return createBlock(SP.getOwner().id);
 }

@@ -1,17 +1,12 @@
-#ifndef Node
 #include "Include/Node.hpp"
-#define Node
-#endif
-
-#ifndef Simul
-#include "Include/Simulation.hpp"
-#define Simul
-#endif
-
+#include "Include/User.hpp"
+#include "Include/Rsa.h"
 #include <QApplication>
 #include <QMainWindow>
 #include <QWidget>
 #include <QPushButton>
+
+using namespace std;
 
 int main (int argc, char **argv )
 {
@@ -23,7 +18,7 @@ int main (int argc, char **argv )
   long long enc = encrypt(15,toto.publicKey,toto.getPrivateKey());
   cout << enc <<endl;
   cout << decrypt(enc,toto.publicKey)<<endl;
-  auto myWindow=new QWidget() ;
+  auto myWindow= new QWidget();
   auto myButton = new QPushButton(myWindow);
   myWindow->show();
   return 0;

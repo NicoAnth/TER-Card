@@ -1,3 +1,5 @@
+#ifndef BLOCK_H
+#define BLOCK_H
 #include "Transaction.hpp"
 #include <QList>
 
@@ -17,3 +19,4 @@ public:
 private:
   Transaction AddTransaction(Transaction t);
 };
+#endif

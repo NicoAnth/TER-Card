@@ -2,7 +2,11 @@
 #define USER_H
 #include <memory>
 #include <utility> 
+#include "Transaction.hpp"
 #include "Rsa.h"
+#include "hash-library/sha256.h"
+#include "Node.hpp"
+#include <QCryptographicHash>
 
 class NodeClass;
 
@@ -24,7 +28,9 @@ class User {
     
     //Constructor
     User();
+    
     std::tuple<long long, long long, long long> getPrivateKey();
+    std::pair<long long,Transaction> sendTransaction(Transaction t);
 
   private:
     std::tuple<long long, long long, long long> privateKey;

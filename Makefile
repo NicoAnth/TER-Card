@@ -15,8 +15,8 @@ EQ            = =
 CC            = gcc
 CXX           = g++
 DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
-CFLAGS        = -pipe -O2 -Wall -W -g -D_REENTRANT -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -O2 -Wall -W -g -D_REENTRANT -fPIC $(DEFINES)
+CFLAGS        = -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
+CXXFLAGS      = -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 INCPATH       = -I. -I. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
@@ -391,37 +391,50 @@ Main.o: Main.cpp Include/Node.hpp \
 		Include/Transaction.hpp \
 		Include/User.hpp \
 		Include/Rsa.h \
-		Include/StakePool.hpp \
-		Include/Simulation.hpp
+		hash-library/sha256.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Main.o Main.cpp
 
 Node.o: Node.cpp Include/Node.hpp \
 		Include/Chain.hpp \
 		Include/Block.hpp \
 		Include/Transaction.hpp \
+		Include/StakePool.hpp \
 		Include/User.hpp \
 		Include/Rsa.h \
-		Include/StakePool.hpp
+		hash-library/sha256.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Node.o Node.cpp
 
 Simulation.o: Simulation.cpp Include/Simulation.hpp \
 		Include/User.hpp \
-		Include/Rsa.h
+		Include/Transaction.hpp \
+		Include/Rsa.h \
+		hash-library/sha256.h \
+		Include/Node.hpp \
+		Include/Chain.hpp \
+		Include/Block.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Simulation.o Simulation.cpp
 
 StakePool.o: StakePool.cpp Include/StakePool.hpp \
 		Include/User.hpp \
-		Include/Rsa.h
+		Include/Transaction.hpp \
+		Include/Rsa.h \
+		hash-library/sha256.h \
+		Include/Node.hpp \
+		Include/Chain.hpp \
+		Include/Block.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o StakePool.o StakePool.cpp
 
 User.o: User.cpp Include/User.hpp \
-		Include/Rsa.h
+		Include/Transaction.hpp \
+		Include/Rsa.h \
+		hash-library/sha256.h \
+		Include/Node.hpp \
+		Include/Chain.hpp \
+		Include/Block.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o User.o User.cpp
 
 Block.o: Block.cpp Include/Block.hpp \
-		Include/Transaction.hpp \
-		Include/User.hpp \
-		Include/Rsa.h
+		Include/Transaction.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Block.o Block.cpp
 
 Rsa.o: Rsa.cpp Include/Rsa.h

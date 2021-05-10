@@ -1,16 +1,21 @@
-#ifndef Users
-#define Users
+#ifndef TRANSACTION_H
+#define TRANSACTION_H
 #include <string>
-#include "User.hpp"
-#endif
 
+class User;
 class Transaction {
 
 public:
-  User sender;
-  User receiver;
+
+  User* sender;
+  User* receiver;
   int amount;
   int id;
   std::string date; //temporary
+  std::string toString();
 
+  /* Constructor */
+  Transaction();
+  Transaction(User* sender, User* receiver, int amount, int id);
 };
+#endif

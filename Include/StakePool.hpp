@@ -1,7 +1,7 @@
-#ifndef Users
-#define Users
+#ifndef SP_H
+#define SP_H
 #include "User.hpp"
-#endif
+
 
 #include <QMap>
 
@@ -10,7 +10,7 @@ class StakePool {
 public:
   QMap<User,int> enrolled;
   int pledge;
-  User poolOwner;
+  User& poolOwner;
   int stakes;
 
   //Return 1 on success, 0 on error
@@ -22,3 +22,4 @@ public:
 
   User getOwner();
 };
+#endif

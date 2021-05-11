@@ -2,10 +2,11 @@
 #include "Include/User.hpp"
 
 std::string Transaction::toString(){
-    return to_string(this->amount) + to_string(this->id);
+    return std::to_string(this->amount) + std::to_string(this->id);
 }
+
 Transaction::Transaction(){
-    id = -1;
+    id = 1;
 }
 
 Transaction::Transaction(User* m_sender, User* m_receiver, int m_amount, int m_id){

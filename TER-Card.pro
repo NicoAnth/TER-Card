@@ -29,4 +29,4 @@ HEADERS += Include/Block.hpp \
            Include/User.hpp \
            Include/Rsa.h \
 
-SOURCES += Main.cpp Node.cpp Simulation.cpp StakePool.cpp User.cpp Block.cpp Rsa.cpp
+SOURCES += Main.cpp Node.cpp Simulation.cpp StakePool.cpp User.cpp Block.cpp Rsa.cpp Transaction.cpp

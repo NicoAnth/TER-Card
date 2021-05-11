@@ -1,4 +1,5 @@
 #include "Include/Rsa.h"
+using namespace std;
 
 // find gcd
 long long gcd(long long a, long long b) {

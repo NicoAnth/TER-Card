@@ -2,7 +2,6 @@
 #define NODE_H
 #include <QList>
 #include "Chain.hpp"
-#include <QCryptographicHash>
 
 class StakePool;
 //I still can't believe I lost 2 hours because Node was already taken and my compilo didn't say anything

@@ -58,14 +58,16 @@ SOURCES       = Main.cpp \
 		StakePool.cpp \
 		User.cpp \
 		Block.cpp \
-		Rsa.cpp 
+		Rsa.cpp \
+		Transaction.cpp 
 OBJECTS       = Main.o \
 		Node.o \
 		Simulation.o \
 		StakePool.o \
 		User.o \
 		Block.o \
-		Rsa.o
+		Rsa.o \
+		Transaction.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -154,7 +156,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		StakePool.cpp \
 		User.cpp \
 		Block.cpp \
-		Rsa.cpp
+		Rsa.cpp \
+		Transaction.cpp
 QMAKE_TARGET  = TER-Card
 DESTDIR       = 
 TARGET        = TER-Card
@@ -335,7 +338,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents Include/Block.hpp Include/Chain.hpp Include/Node.hpp Include/Simulation.hpp Include/StakePool.hpp Include/Transaction.hpp Include/User.hpp Include/Rsa.h $(DISTDIR)/
-	$(COPY_FILE) --parents Main.cpp Node.cpp Simulation.cpp StakePool.cpp User.cpp Block.cpp Rsa.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents Main.cpp Node.cpp Simulation.cpp StakePool.cpp User.cpp Block.cpp Rsa.cpp Transaction.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -390,8 +393,7 @@ Main.o: Main.cpp Include/Node.hpp \
 		Include/Block.hpp \
 		Include/Transaction.hpp \
 		Include/User.hpp \
-		Include/Rsa.h \
-		hash-library/sha256.h
+		Include/Rsa.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Main.o Main.cpp
 
 Node.o: Node.cpp Include/Node.hpp \
@@ -400,37 +402,33 @@ Node.o: Node.cpp Include/Node.hpp \
 		Include/Transaction.hpp \
 		Include/StakePool.hpp \
 		Include/User.hpp \
-		Include/Rsa.h \
-		hash-library/sha256.h
+		Include/Rsa.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Node.o Node.cpp
 
 Simulation.o: Simulation.cpp Include/Simulation.hpp \
 		Include/User.hpp \
-		Include/Transaction.hpp \
-		Include/Rsa.h \
-		hash-library/sha256.h \
 		Include/Node.hpp \
 		Include/Chain.hpp \
-		Include/Block.hpp
+		Include/Block.hpp \
+		Include/Transaction.hpp \
+		Include/Rsa.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Simulation.o Simulation.cpp
 
 StakePool.o: StakePool.cpp Include/StakePool.hpp \
 		Include/User.hpp \
-		Include/Transaction.hpp \
-		Include/Rsa.h \
-		hash-library/sha256.h \
 		Include/Node.hpp \
 		Include/Chain.hpp \
-		Include/Block.hpp
+		Include/Block.hpp \
+		Include/Transaction.hpp \
+		Include/Rsa.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o StakePool.o StakePool.cpp
 
 User.o: User.cpp Include/User.hpp \
-		Include/Transaction.hpp \
-		Include/Rsa.h \
-		hash-library/sha256.h \
 		Include/Node.hpp \
 		Include/Chain.hpp \
-		Include/Block.hpp
+		Include/Block.hpp \
+		Include/Transaction.hpp \
+		Include/Rsa.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o User.o User.cpp
 
 Block.o: Block.cpp Include/Block.hpp \
@@ -439,6 +437,14 @@ Block.o: Block.cpp Include/Block.hpp \
 
 Rsa.o: Rsa.cpp Include/Rsa.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Rsa.o Rsa.cpp
+
+Transaction.o: Transaction.cpp Include/Transaction.hpp \
+		Include/User.hpp \
+		Include/Node.hpp \
+		Include/Chain.hpp \
+		Include/Block.hpp \
+		Include/Rsa.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Transaction.o Transaction.cpp
 
 ####### Install
 

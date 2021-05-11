@@ -2,10 +2,9 @@
 #define USER_H
 #include <memory>
 #include <utility> 
+#include "Node.hpp"
 #include "Transaction.hpp"
 #include "Rsa.h"
-#include "hash-library/sha256.h"
-#include "Node.hpp"
 #include <QCryptographicHash>
 
 class NodeClass;

@@ -1,7 +1,5 @@
-#ifndef Us
-#define Us
 #include "Include/User.hpp"
-#endif
+#include "Include/Transaction.hpp"
 
 User::User()
 {
@@ -18,11 +16,11 @@ std::tuple<long long, long long, long long> User::getPrivateKey(){
 }
 
 std::pair<long long,Transaction> User::sendTransaction(Transaction t){
-  SHA256 sha;
-  std::string hash = sha(t.toString());
-  long long ll = std::stoll(hash);
-  long long signature = encrypt(ll,publicKey,privateKey);
-  return make_pair(signature,t);
+  
+  QString s = s.fromStdString(t.toString());
+  QByteArray hash = QCryptographicHash::hash(s.toLocal8Bit(),QCryptographicHash::Sha256);
+  long long signature = encrypt(hash.toLongLong(),publicKey,privateKey);
+  return std::make_pair(signature,t);
 }
 
 

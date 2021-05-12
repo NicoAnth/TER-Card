@@ -56,8 +56,8 @@ long long generatePrimeNumber(){
 
    long long nb;
    bool isPrime= false;
-
-   //Peut-être implémenter Miller-Rabin plus tard ce serait plus sérieux
+   
+   //Peut-être implémenter Miller-Rabin, ce sera plus sérieux
    while(isPrime == false){
       
       //Rand between 10 000 and 20 000

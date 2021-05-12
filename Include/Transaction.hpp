@@ -7,15 +7,14 @@ class Transaction {
 
 public:
 
-  User* sender;
-  User* receiver;
+  User& sender;
+  User& receiver;
   int amount;
   int id;
   std::string date; //temporary
   std::string toString();
 
   /* Constructor */
-  Transaction();
-  Transaction(User* sender, User* receiver, int amount, int id);
+  Transaction(User& sender, User& receiver, int amount, int id);
 };
 #endif

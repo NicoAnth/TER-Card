@@ -29,7 +29,8 @@ class User {
     User();
     
     std::tuple<long long, long long, long long> getPrivateKey();
-    std::pair<long long,Transaction> sendTransaction(Transaction t);
+    std::pair<Transaction,long long> sendTransaction(Transaction t);
+
 
   private:
     std::tuple<long long, long long, long long> privateKey;

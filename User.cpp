@@ -1,5 +1,8 @@
 #include "Include/User.hpp"
 #include "Include/Transaction.hpp"
+#include <bits/stdc++.h>
+#include <QByteArray>
+#include <qdebug.h>
 
 User::User()
 {
@@ -15,12 +18,15 @@ std::tuple<long long, long long, long long> User::getPrivateKey(){
   return privateKey;
 }
 
-std::pair<long long,Transaction> User::sendTransaction(Transaction t){
-  
+std::pair<Transaction,long long> User::sendTransaction(Transaction t){
+
   QString s = s.fromStdString(t.toString());
   QByteArray hash = QCryptographicHash::hash(s.toLocal8Bit(),QCryptographicHash::Sha256);
-  long long signature = encrypt(hash.toLongLong(),publicKey,privateKey);
-  return std::make_pair(signature,t);
+  qDebug()<< hash.toHex();
+  std::string hashString = hash.toHex(0).toStdString();
+  long long ll = std::stoll(hashString);
+  long long signature = encrypt(ll,publicKey,privateKey);
+  return std::make_pair(t,signature);
 }
 
 

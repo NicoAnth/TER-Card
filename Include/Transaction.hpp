@@ -11,6 +11,7 @@ public:
   User& receiver;
   int amount;
   int id;
+  int fees;
   std::string date; //temporary
   std::string toString();
 

@@ -59,7 +59,8 @@ SOURCES       = Main.cpp \
 		User.cpp \
 		Block.cpp \
 		Rsa.cpp \
-		Transaction.cpp 
+		Transaction.cpp \
+		GenesisBlock.cpp 
 OBJECTS       = Main.o \
 		Node.o \
 		Simulation.o \
@@ -67,7 +68,8 @@ OBJECTS       = Main.o \
 		User.o \
 		Block.o \
 		Rsa.o \
-		Transaction.o
+		Transaction.o \
+		GenesisBlock.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -150,14 +152,16 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		Include/StakePool.hpp \
 		Include/Transaction.hpp \
 		Include/User.hpp \
-		Include/Rsa.h Main.cpp \
+		Include/Rsa.h \
+		Include/GenesisBlock.hpp Main.cpp \
 		Node.cpp \
 		Simulation.cpp \
 		StakePool.cpp \
 		User.cpp \
 		Block.cpp \
 		Rsa.cpp \
-		Transaction.cpp
+		Transaction.cpp \
+		GenesisBlock.cpp
 QMAKE_TARGET  = TER-Card
 DESTDIR       = 
 TARGET        = TER-Card
@@ -337,8 +341,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents Include/Block.hpp Include/Chain.hpp Include/Node.hpp Include/Simulation.hpp Include/StakePool.hpp Include/Transaction.hpp Include/User.hpp Include/Rsa.h $(DISTDIR)/
-	$(COPY_FILE) --parents Main.cpp Node.cpp Simulation.cpp StakePool.cpp User.cpp Block.cpp Rsa.cpp Transaction.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents Include/Block.hpp Include/Chain.hpp Include/Node.hpp Include/Simulation.hpp Include/StakePool.hpp Include/Transaction.hpp Include/User.hpp Include/Rsa.h Include/GenesisBlock.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents Main.cpp Node.cpp Simulation.cpp StakePool.cpp User.cpp Block.cpp Rsa.cpp Transaction.cpp GenesisBlock.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -445,6 +449,15 @@ Transaction.o: Transaction.cpp Include/Transaction.hpp \
 		Include/Block.hpp \
 		Include/Rsa.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Transaction.o Transaction.cpp
+
+GenesisBlock.o: GenesisBlock.cpp Include/GenesisBlock.hpp \
+		Include/Block.hpp \
+		Include/Transaction.hpp \
+		Include/User.hpp \
+		Include/Node.hpp \
+		Include/Chain.hpp \
+		Include/Rsa.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o GenesisBlock.o GenesisBlock.cpp
 
 ####### Install
 

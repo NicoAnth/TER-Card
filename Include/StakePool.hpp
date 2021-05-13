@@ -1,7 +1,7 @@
 #ifndef SP_H
 #define SP_H
 #include "User.hpp"
-
+#include "Node.hpp"
 
 #include <QMap>
 
@@ -12,7 +12,7 @@ public:
   int pledge;
   User& poolOwner;
   int stakes;
-
+  NodeClass connectedNode;
   //Return 1 on success, 0 on error
   int addUser(User newMember, int stake);
   void removeUser(User newMember);

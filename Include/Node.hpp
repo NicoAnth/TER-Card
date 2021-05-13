@@ -3,14 +3,18 @@
 #include <QList>
 #include "Chain.hpp"
 
+
+class User;
 class StakePool;
-//I still can't believe I lost 2 hours because Node was already taken and my compilo didn't say anything
+
 class NodeClass {
 public:
 
-  QList<User> users;
+  const User* Owner;
   QList<Chain> chain;
-  static QList<int> bufferTransactions;
+  QList <Transaction> ledger;
+  bool online;
+  bool isSlotLeader;
 
   int electSlotLeader(void);
 

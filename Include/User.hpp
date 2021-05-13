@@ -7,6 +7,7 @@
 #include "Rsa.h"
 #include <QCryptographicHash>
 
+class StakePool;
 class NodeClass;
 
 class User {
@@ -24,7 +25,8 @@ class User {
     // So we need to make it a pointer
     // Either that or we use a unique_ptr but I'll go with a friendly yet firm "No"
     NodeClass* connectedNode;
-    
+    StakePool* connectedPool;
+
     //Constructor
     User();
     

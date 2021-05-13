@@ -11,8 +11,7 @@ int NodeClass::electSlotLeader(void)
 
 Block NodeClass::createBlock(int Uid)
 {
-  Block b{};
-  return b;
+  
 }
 
 Block NodeClass::createBlock(StakePool& SP)

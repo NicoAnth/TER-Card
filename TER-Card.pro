@@ -28,5 +28,6 @@ HEADERS += Include/Block.hpp \
            Include/Transaction.hpp \
            Include/User.hpp \
            Include/Rsa.h \
+           Include/GenesisBlock.hpp
 
-SOURCES += Main.cpp Node.cpp Simulation.cpp StakePool.cpp User.cpp Block.cpp Rsa.cpp Transaction.cpp \
+SOURCES += Main.cpp Node.cpp Simulation.cpp StakePool.cpp User.cpp Block.cpp Rsa.cpp Transaction.cpp GenesisBlock.cpp \

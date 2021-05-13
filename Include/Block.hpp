@@ -1,20 +1,23 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 #include "Transaction.hpp"
+#include <QByteArray>
 #include <QList>
+#define TRANSACTION_MAX 10
 
 class Block {
 public:
-  long int signature;
-  int hash_prev;
-  int hash_cur;
-  int id;
+  
+  static int count;
+  const long long signature;
+  const QByteArray hash_prev;
+  const QByteArray hash_cur;
+  const int id;
 
   QList<Transaction> trans;
-  //pointeur vers le bloc suivant ?
 
-  //Pour le debug
-  Block() : id(-99){}
+  //Constructor
+  Block(QByteArray hashPrev);
 
 private:
   Transaction AddTransaction(Transaction t);

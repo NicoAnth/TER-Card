@@ -1,18 +1,28 @@
 #include "Include/User.hpp"
 #include "Include/Transaction.hpp"
+#include "Include/GenesisBlock.hpp"
+#include "Include/StakePool.hpp"
 #include <bits/stdc++.h>
 #include <QByteArray>
 #include <qdebug.h>
 
+class requireEnoughUseableStake: public std::exception{
+  virtual const char* what() const throw()
+  {
+    return "The user doesn't have enough useable stake to perfomr this operation";
+  }
+}reus;
+
 int User::count = 0;
 
-User::User()
+User::User(GenesisBlock& geblock)
 {
   id = count;
-  totalStakes = 1;
-  useableStakes = 1;
-  pooledStakes = 1;
+  totalStakes = 0;
+  useableStakes = 0;
+  pooledStakes = 0;
   createKeys(publicKey,privateKey);
+  geblock.addPublicKey(publicKey);
   connectedNode = NULL;
   count++;
 };
@@ -36,6 +46,35 @@ Transaction User::createTransaction(User& m_receiver, int m_amount){
   long long signature = encrypt(ll,publicKey,privateKey);
   t.setSignature(signature);
   return t;
+}
+
+NodeClass User::createNode(NodeClass onlineNode, int stake){
+  
+  try{
+    if(stake<useableStakes){
+      throw reus; 
+    }
+  }
+  catch(exception &e){
+    cout << e.what() << '\n';
+  }
+  NodeClass node(this,onlineNode.getBlockChain(),onlineNode.getLedger(),stake);
+  connectedNode = &node;
+  return node;
+}
+
+void User::joinStakePool(StakePool& sp, int stake){
+  
+  try{
+    if(stake<useableStakes){
+      throw reus; 
+    }
+  }
+  catch(exception &e){
+    cout << e.what() << '\n';
+  }
+  connectedPool = &sp;
+  sp.addUser(*this,stake);
 }
 
 

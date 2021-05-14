@@ -7,6 +7,7 @@
 #include "Rsa.h"
 #include <QCryptographicHash>
 
+class GenesisBlock;
 class StakePool;
 class NodeClass;
 
@@ -20,20 +21,17 @@ class User {
     int totalStakes;
     int useableStakes;
     int pooledStakes;
-
-    // And we finally start with our dubious hacks !
-    // We're stuck in an include loop and a simple forward definition doesn't cut it
-    // So we need to make it a pointer
-    // Either that or we use a unique_ptr but I'll go with a friendly yet firm "No"
     NodeClass* connectedNode;
     StakePool* connectedPool;
 
     //Constructor
-    User();
+    User(GenesisBlock& geBlock);
     ~User();
     
     std::tuple<long long, long long, long long> const getPrivateKey() const;
     Transaction createTransaction(User& m_receiver, int m_amount);
+    NodeClass createNode(NodeClass onlineNode, int amount);
+    void joinStakePool(StakePool& sp, int stake);
 
 
   private:

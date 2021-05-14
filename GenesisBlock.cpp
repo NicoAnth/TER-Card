@@ -1,4 +1,5 @@
 #include <Include/GenesisBlock.hpp>
+#include <Include/Node.hpp>
 #include <QCryptographicHash>
 #include <QString>
 
@@ -11,6 +12,14 @@ GenesisBlock::GenesisBlock(){
 QList<std::pair<long,long>> const GenesisBlock::getPublicKeys(){
     return publicKey;
 }
-QMap<NodeClass,int> const GenesisBlock::getStakers(){
+QList<std::pair<NodeClass,int>> const GenesisBlock::getStakers(){
     return stakers;
+}
+
+void GenesisBlock::addStaker(NodeClass node, int stake){
+    stakers.append(std::make_pair(node,stake));
+}
+
+void GenesisBlock::addPublicKey(std::pair<long,long> pK){
+    publicKey.append(pK);
 }

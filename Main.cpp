@@ -13,7 +13,8 @@ int main (int argc, char **argv )
 {
   QApplication app(argc, argv);
 
-  User toto,Lolo;
+  GenesisBlock geBlock;
+  User toto(geBlock),Lolo(geBlock);
   auto myWindow= new QWidget();
   auto myButton = new QPushButton(myWindow);
   myWindow->show();

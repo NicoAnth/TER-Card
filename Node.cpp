@@ -8,38 +8,56 @@
 
 using namespace std;
 
+class requireMinimalStake: public std::exception{
+  virtual const char* what() const throw()
+  {
+    return "The minimal stake is not respected, cannot create a new node";
+  }
+}rms;
 
-NodeClass::NodeClass(User* m_owner,QList<Block> m_blockChain,QList <Transaction> m_ledger):owner(m_owner),blockChain(m_blockChain),ledger(m_ledger){
+NodeClass::NodeClass(User* m_owner,QList<Block> m_blockChain,QList <Transaction> m_ledger, int m_stake):owner(m_owner),blockChain(m_blockChain),ledger(m_ledger){
+  
+  try{
+    if(m_stake < MINIMAL_STAKE){
+      throw rms;
+    }
+  }
+  catch (exception& e)
+  {
+    cout << e.what() << '\n';
+  }
+  stake = m_stake;
   online = true;
   isSlotLeader = false;
+
 }
 
 NodeClass NodeClass::electSlotLeader()
 {
   GenesisBlock& geBlock = dynamic_cast<GenesisBlock&> (blockChain.first());
-  QMapIterator<NodeClass, int> i(geBlock.getStakers());
+  QListIterator<std::pair<NodeClass,int>> i(geBlock.getStakers());
   int sum=0;
 
   srand (time(NULL));
 
-  int totalStake;
+  int totalStake=0;
   while(i.hasNext()){
-    i.next();
-    totalStake += i.value();
+    totalStake += i.next().second;
   }
 
-  int nextSlotLeader = rand()%1+totalStake;
+  int nextSlotLeader = rand() % (totalStake + 1 - 0) + 0;
 
   i.toFront();
   while(i.hasNext())
   { 
-    i.next();
-    sum += i.value();
+    std::pair<NodeClass,int> next = i.next();
+    sum += next.second;
     if(nextSlotLeader < sum ){
-      return i.key();
+      this->isSlotLeader = false;
+      next.first.isSlotLeader = true;
+      return next.first;
     }
   }
-
 }
 
 bool NodeClass::slotLeaderVerification()
@@ -67,11 +85,14 @@ bool NodeClass::createBlock(){
     if(isSlotLeader == true && slotLeaderVerification()){
       QList<Transaction> blockTransaction;
       QList<Transaction>::iterator i;
-      for(i=(ledger.begin()+ledger.size())-10;i!= ledger.end();++i){
+      int totalFees;
+      for(i=(ledger.begin()+ledger.size())-TRANSACTION_MAX;i!= ledger.end();++i){
         blockTransaction.append(*i);
+        totalFees += i->getFees();
       }
         Block newBlock(blockChain.last().getHash(),signBlock(),computeLastBlockHash(),blockTransaction);
         blockChain.append(newBlock);
+        stake += totalFees;
         return true;
     }
     else{
@@ -118,5 +139,5 @@ long long NodeClass::signBlock(){
   long long ll = std::stoll(hashString);
   return encrypt(ll,owner->publicKey,owner->getPrivateKey());
   }
-  else qDebug()<< "Must be the slot leader";
+  else qDebug()<< "The node must be the slot leader to sign a block";
 }

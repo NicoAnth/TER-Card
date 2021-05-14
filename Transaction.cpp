@@ -34,3 +34,6 @@ void Transaction::setSignature(long long m_signature){
     signature = m_signature;
 }
 
+int Transaction::getFees(){
+    return fees;
+}

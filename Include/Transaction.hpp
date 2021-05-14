@@ -27,6 +27,7 @@ public:
   long long getSignature();
   User& getSender();
   User& getReceiver();
+  int getAmount();
   
   /* Setter */
   void setSignature(long long signature);

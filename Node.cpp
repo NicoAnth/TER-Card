@@ -1,27 +1,69 @@
 #include "Include/Node.hpp"
 #include "Include/StakePool.hpp"
+#include "Include/GenesisBlock.hpp"
+#include <stdlib.h> 
+#include <time.h>
 #include <QCryptographicHash>
 #include <qdebug.h>
 
 using namespace std;
 
-int NodeClass::electSlotLeader(void)
+
+NodeClass::NodeClass(User* m_owner,QList<Block> m_blockChain,QList <Transaction> m_ledger):owner(m_owner),blockChain(m_blockChain),ledger(m_ledger){
+  online = true;
+  isSlotLeader = false;
+}
+
+NodeClass NodeClass::electSlotLeader()
 {
-  return 0;
+  GenesisBlock& geBlock = dynamic_cast<GenesisBlock&> (blockChain.first());
+  QMapIterator<NodeClass, int> i(geBlock.getStakers());
+  int sum=0;
+
+  srand (time(NULL));
+
+  int totalStake;
+  while(i.hasNext()){
+    i.next();
+    totalStake += i.value();
+  }
+
+  int nextSlotLeader = rand()%1+totalStake;
+
+  i.toFront();
+  while(i.hasNext())
+  { 
+    i.next();
+    sum += i.value();
+    if(nextSlotLeader < sum ){
+      return i.key();
+    }
+  }
+
 }
 
 bool NodeClass::slotLeaderVerification()
 {
-  QList<Transaction>::Iterator i;
-  for(i=(ledger.begin()+ledger.size())-TRANSACTION_MAX; i != ledger.end(); ++i){
-      if(!verifySignature(i->getSender(),*i,i->getSignature())){
-        return false;
-      }
+  if(isSlotLeader){
+    QList<Transaction>::Iterator i;
+    for(i=(ledger.begin()+ledger.size())-TRANSACTION_MAX; i != ledger.end(); ++i){
+        if(!verifySignature(i->getSender(),*i,i->getSignature())){
+          qDebug()<< "Slot leader returned : Wrong Signature";
+           return false;
+        }
+        if(i->getSender().useableStakes < i->getAmount()){
+          qDebug()<< "Slot leader returned: User doesn't own enough money to perform this transaction";
+          return false;
+        }
+    }
   }
+  else qDebug()<< "Must be the slot leader";
+
   return true;
 }
 
 bool NodeClass::createBlock(){
+
     if(isSlotLeader == true && slotLeaderVerification()){
       QList<Transaction> blockTransaction;
       QList<Transaction>::iterator i;
@@ -69,8 +111,12 @@ QByteArray NodeClass::computeLastBlockHash(){
 }
 
 long long NodeClass::signBlock(){
+
+  if(isSlotLeader){
   QByteArray hash = computeLastBlockHash();
   std::string hashString = hash.toHex(0).toStdString();
   long long ll = std::stoll(hashString);
   return encrypt(ll,owner->publicKey,owner->getPrivateKey());
+  }
+  else qDebug()<< "Must be the slot leader";
 }

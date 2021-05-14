@@ -3,9 +3,9 @@
 
 int Block::count = 0;
 
-Block::Block():signature(NULL){};
+Block::Block():signature(0){};
 
-Block::Block(QByteArray hashPrev, long long slotLeaderSignature, QByteArray m_Hash,QList<Transaction> m_transactionList): id(count),signature(slotLeaderSignature),hash_prev(hashPrev),hash_cur(m_Hash), transactionList(m_transactionList){
+Block::Block(QByteArray hashPrev, long long slotLeaderSignature, QByteArray m_Hash,QList<Transaction> m_transactionList): signature(slotLeaderSignature),hash_prev(hashPrev), transactionList(m_transactionList),id(count),hash_cur(m_Hash){
     count += 1;
 }
 

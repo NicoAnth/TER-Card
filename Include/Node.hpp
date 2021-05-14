@@ -9,7 +9,7 @@ class User;
 class StakePool;
 
 class NodeClass {
-public:
+private:
 
   const User* owner;
   QList<Block> blockChain;
@@ -17,8 +17,13 @@ public:
   bool online;
   bool isSlotLeader;
 
+public:
+
+  /* Constructor */
+  NodeClass(User* m_owner,QList<Block> m_blockChain,QList <Transaction> m_ledger);
+
   /* Slot leader methods */
-  int electSlotLeader(void);
+  NodeClass electSlotLeader();
   bool createBlock();
   bool slotLeaderVerification();
   long long signBlock();  

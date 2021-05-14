@@ -11,11 +11,12 @@ class GenesisBlock : public Block {
 
     private:
         QList<std::pair<long,long>> publicKey;
-        QMap<User,int> stakers;
+        QMap<NodeClass,int> stakers;
     public:
-        GenesisBlock(QByteArray m_Hash);
+        GenesisBlock();
+        ~GenesisBlock(){};
         QList<std::pair<long,long>> const getPublicKeys();
-        QMap<User,int> const getStakers();
+        QMap<NodeClass,int> const getStakers();
         
 };
 #endif

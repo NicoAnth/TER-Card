@@ -7,23 +7,23 @@
 
 class Block {
 
-protected:
-  
-  static int count;
-  int id;
+private:
   const long long signature;
   QByteArray hash_prev;
-  QByteArray hash_cur;
-
   QList<Transaction> transactionList;
 
+protected:
+  
+  int id;
+  static int count;
+  QByteArray hash_cur;
 
 public:
 
   //Constructor
   Block();
   Block(QByteArray hashPrev,long long slotLeaderSignature, QByteArray m_Hash,QList<Transaction> m_transactionList);
-  
+  virtual ~Block(){};
   /* getter */
   QList<Transaction> const getTransactionList();
   QByteArray getHash();

@@ -26,6 +26,11 @@ long long Transaction::getSignature(){
     return signature;
 }
 
+int Transaction::getAmount(){
+    return amount;
+}
+
 void Transaction::setSignature(long long m_signature){
     signature = m_signature;
 }
+

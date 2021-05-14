@@ -3,23 +3,33 @@
 #include "Transaction.hpp"
 #include <QByteArray>
 #include <QList>
-#define TRANSACTION_MAX 10
+#include <QString>
 
 class Block {
-public:
+
+protected:
   
   static int count;
+  int id;
   const long long signature;
-  const QByteArray hash_prev;
-  const QByteArray hash_cur;
-  const int id;
+  QByteArray hash_prev;
+  QByteArray hash_cur;
 
-  QList<Transaction> trans;
+  QList<Transaction> transactionList;
+
+
+public:
 
   //Constructor
-  Block(QByteArray hashPrev);
+  Block();
+  Block(QByteArray hashPrev,long long slotLeaderSignature, QByteArray m_Hash,QList<Transaction> m_transactionList);
+  
+  /* getter */
+  QList<Transaction> const getTransactionList();
+  QByteArray getHash();
+  QString toString();
 
-private:
   Transaction AddTransaction(Transaction t);
+
 };
 #endif

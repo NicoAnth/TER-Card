@@ -3,6 +3,7 @@
 #include <QList>
 #include "Chain.hpp"
 
+#define TRANSACTION_MAX 3
 
 class User;
 class StakePool;
@@ -10,20 +11,22 @@ class StakePool;
 class NodeClass {
 public:
 
-  const User* Owner;
-  QList<Chain> chain;
+  const User* owner;
+  QList<Block> blockChain;
   QList <Transaction> ledger;
   bool online;
   bool isSlotLeader;
 
+  /* Slot leader methods */
   int electSlotLeader(void);
+  bool createBlock();
+  bool slotLeaderVerification();
+  long long signBlock();  
 
-  Block createBlock(int Uid);
-
-  Block createBlock(StakePool& SP);
-
+  /* common methods */
   void execTransaction(User sender, User receiver, int amount);
   bool verifySignature(User m_user,Transaction t, long long Hash);
-  //Node();
+  QByteArray computeLastBlockHash();
+  //Node()
 };
 #endif

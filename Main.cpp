@@ -14,7 +14,6 @@ int main (int argc, char **argv )
 
   User toto,Lolo;
   NodeClass node;
-  Transaction transaction(toto,Lolo,30,5);
   cout << "n: " << toto.publicKey.first << " e: " << toto.publicKey.second <<endl;
   cout << "p: " << get<0>(toto.getPrivateKey()) << " q: " << get<1>(toto.getPrivateKey()) << " d: " << get<2>(toto.getPrivateKey()) << endl;
 
@@ -22,9 +21,9 @@ int main (int argc, char **argv )
   long long enc = encrypt(10,toto.publicKey,toto.getPrivateKey());
   cout << enc <<endl;
   cout << decrypt(enc,toto.publicKey)<<endl;
-  pair<Transaction,long long> tsend = toto.sendTransaction(transaction);
-  cout << "Encrypt hash: " << tsend.second <<endl;
-  cout << "Bool: " << node.verifySignature(toto,tsend.first,tsend.second) <<endl;
+  Transaction tsend = toto.createTransaction(Lolo,50);
+  cout << "Encrypt hash: " << tsend.getSignature() <<endl;
+  cout << "Bool: " << node.verifySignature(toto,tsend,tsend.getSignature()) <<endl;
   auto myWindow= new QWidget();
   auto myButton = new QPushButton(myWindow);
   myWindow->show();

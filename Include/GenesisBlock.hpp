@@ -5,7 +5,7 @@
 #include <QList>
 #include <QMap>
 
-#define TRANSACTION_MAX 10
+#define TRANSACTION_MAX 3
 
 class GenesisBlock : public Block {
 
@@ -13,8 +13,9 @@ class GenesisBlock : public Block {
         QList<std::pair<long,long>> publicKey;
         QMap<User,int> stakers;
     public:
-       QList<std::pair<long,long>> getPublicKeys();
-       QMap<User,int> getStakers();
-
+        GenesisBlock(QByteArray m_Hash);
+        QList<std::pair<long,long>> const getPublicKeys();
+        QMap<User,int> const getStakers();
+        
 };
 #endif

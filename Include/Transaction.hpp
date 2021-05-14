@@ -5,17 +5,30 @@
 class User;
 class Transaction {
 
-public:
+private:
 
   User& sender;
   User& receiver;
-  int amount;
+  static int count;
   int id;
+  int amount;
   int fees;
+  long long signature;
   std::string date; //temporary
+
+public:
+  
   std::string toString();
 
   /* Constructor */
-  Transaction(User& sender, User& receiver, int amount, int id);
+  Transaction(User& sender, User& receiver, int amount);
+
+  /* getter */
+  long long getSignature();
+  User& getSender();
+  User& getReceiver();
+  
+  /* Setter */
+  void setSignature(long long signature);
 };
 #endif

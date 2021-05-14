@@ -14,6 +14,7 @@ class User {
 
   public:
 
+    static int count;
     int id;
     std::pair<long long, long long> publicKey;
     int totalStakes;
@@ -29,13 +30,14 @@ class User {
 
     //Constructor
     User();
+    ~User();
     
-    std::tuple<long long, long long, long long> getPrivateKey();
-    std::pair<Transaction,long long> sendTransaction(Transaction t);
+    std::tuple<long long, long long, long long> const getPrivateKey() const;
+    Transaction createTransaction(User& m_receiver, int m_amount);
 
 
   private:
-    std::tuple<long long, long long, long long> privateKey;
+   std::tuple<long long, long long, long long> privateKey;
 
 };
 

@@ -21,13 +21,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 # Input
 HEADERS += Include/Block.hpp \
-           Include/Chain.hpp \
            Include/Node.hpp \
            Include/Simulation.hpp \
            Include/StakePool.hpp \
            Include/Transaction.hpp \
            Include/User.hpp \
            Include/Rsa.h \
-           Include/GenesisBlock.hpp
+           Include/GenesisBlock.hpp \
 
-SOURCES += Main.cpp Node.cpp Simulation.cpp StakePool.cpp User.cpp Block.cpp Rsa.cpp Transaction.cpp GenesisBlock.cpp \
+SOURCES += Main.cpp Node.cpp Simulation.cpp StakePool.cpp User.cpp Block.cpp Rsa.cpp Transaction.cpp GenesisBlock.cpp

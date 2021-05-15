@@ -6,6 +6,8 @@
 GenesisBlock::GenesisBlock(){
     QString hash_0("0");
     hash_cur = QCryptographicHash::hash(hash_0.toLocal8Bit(),QCryptographicHash::Sha256);
+    positionx = 150;
+    positiony = 125;
     count += 1;
 }
 

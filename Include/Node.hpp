@@ -16,7 +16,7 @@ private:
   const User* owner;
   const int minimalStake = MINIMAL_STAKE;
   int stake;
-  QList<Block> blockChain;
+  QList<Block*> blockChain;
   QList <Transaction> ledger;
   bool online;
   bool isSlotLeader;
@@ -24,7 +24,7 @@ private:
 public:
 
   /* Constructor */
-  NodeClass(User* m_owner,QList<Block> m_blockChain,QList <Transaction> m_ledger, int stake);
+  NodeClass(User* m_owner,QList<Block*> m_blockChain,QList <Transaction> m_ledger, int stake);
 
   /* Slot leader methods */
   NodeClass electSlotLeader();
@@ -38,12 +38,14 @@ public:
   QByteArray computeLastBlockHash();
 
   /* getter */
-  QList<Block> getBlockChain(){
+  QList<Block*> getBlockChain(){
     return blockChain;
   }
   QList <Transaction> getLedger(){
     return ledger;
   }
+  /* setter */
+  void setSlotLeader(bool sl){isSlotLeader = sl;}
 };
 
 #endif

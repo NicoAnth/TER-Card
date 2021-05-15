@@ -15,7 +15,8 @@ class requireMinimalStake: public std::exception{
   }
 }rms;
 
-NodeClass::NodeClass(User* m_owner,QList<Block> m_blockChain,QList <Transaction> m_ledger, int m_stake):owner(m_owner),blockChain(m_blockChain),ledger(m_ledger){
+NodeClass::NodeClass(User* m_owner,QList<Block*> m_blockChain,QList <Transaction> m_ledger, int m_stake):owner(m_owner),
+blockChain(m_blockChain),ledger(m_ledger){
   
   try{
     if(m_stake < MINIMAL_STAKE){
@@ -34,7 +35,7 @@ NodeClass::NodeClass(User* m_owner,QList<Block> m_blockChain,QList <Transaction>
 
 NodeClass NodeClass::electSlotLeader()
 {
-  GenesisBlock& geBlock = dynamic_cast<GenesisBlock&> (blockChain.first());
+  GenesisBlock& geBlock = dynamic_cast<GenesisBlock&> (*blockChain.first());
   QListIterator<std::pair<NodeClass,int>> i(geBlock.getStakers());
   int sum=0;
 
@@ -85,13 +86,14 @@ bool NodeClass::createBlock(){
     if(isSlotLeader == true && slotLeaderVerification()){
       QList<Transaction> blockTransaction;
       QList<Transaction>::iterator i;
-      int totalFees;
+      int totalFees=0;
       for(i=(ledger.begin()+ledger.size())-TRANSACTION_MAX;i!= ledger.end();++i){
         blockTransaction.append(*i);
         totalFees += i->getFees();
       }
-        Block newBlock(blockChain.last().getHash(),signBlock(),computeLastBlockHash(),blockTransaction);
-        blockChain.append(newBlock);
+        Block newBlock((*blockChain.last()).getHash(),signBlock(),computeLastBlockHash(),blockTransaction,
+        (*blockChain.last()).getPositionx(),(*blockChain.last()).getPositiony());
+        blockChain.append(&newBlock);
         stake += totalFees;
         return true;
     }

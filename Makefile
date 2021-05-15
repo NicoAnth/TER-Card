@@ -60,7 +60,7 @@ SOURCES       = Main.cpp \
 		Block.cpp \
 		Rsa.cpp \
 		Transaction.cpp \
-		GenesisBlock.cpp 
+		GenesisBlock.cpp moc_Block.cpp
 OBJECTS       = Main.o \
 		Node.o \
 		Simulation.o \
@@ -69,7 +69,8 @@ OBJECTS       = Main.o \
 		Block.o \
 		Rsa.o \
 		Transaction.o \
-		GenesisBlock.o
+		GenesisBlock.o \
+		moc_Block.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -146,7 +147,6 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		TER-Card.pro Include/Block.hpp \
-		Include/Chain.hpp \
 		Include/Node.hpp \
 		Include/Simulation.hpp \
 		Include/StakePool.hpp \
@@ -341,7 +341,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents Include/Block.hpp Include/Chain.hpp Include/Node.hpp Include/Simulation.hpp Include/StakePool.hpp Include/Transaction.hpp Include/User.hpp Include/Rsa.h Include/GenesisBlock.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents Include/Block.hpp Include/Node.hpp Include/Simulation.hpp Include/StakePool.hpp Include/Transaction.hpp Include/User.hpp Include/Rsa.h Include/GenesisBlock.hpp $(DISTDIR)/
 	$(COPY_FILE) --parents Main.cpp Node.cpp Simulation.cpp StakePool.cpp User.cpp Block.cpp Rsa.cpp Transaction.cpp GenesisBlock.cpp $(DISTDIR)/
 
 
@@ -374,8 +374,15 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all:
+compiler_moc_header_make_all: moc_Block.cpp
 compiler_moc_header_clean:
+	-$(DEL_FILE) moc_Block.cpp
+moc_Block.cpp: Include/Block.hpp \
+		Include/Transaction.hpp \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/nicolas/FAC/M1/Ter/TER-Card/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/nicolas/FAC/M1/Ter/TER-Card -I/home/nicolas/FAC/M1/Ter/TER-Card -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Include/Block.hpp -o moc_Block.cpp
+
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
@@ -388,31 +395,30 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean 
+compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean 
 
 ####### Compile
 
 Main.o: Main.cpp Include/Node.hpp \
-		Include/Chain.hpp \
 		Include/Block.hpp \
 		Include/Transaction.hpp \
 		Include/User.hpp \
-		Include/Rsa.h
+		Include/Rsa.h \
+		Include/GenesisBlock.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Main.o Main.cpp
 
 Node.o: Node.cpp Include/Node.hpp \
-		Include/Chain.hpp \
 		Include/Block.hpp \
 		Include/Transaction.hpp \
 		Include/StakePool.hpp \
 		Include/User.hpp \
-		Include/Rsa.h
+		Include/Rsa.h \
+		Include/GenesisBlock.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Node.o Node.cpp
 
 Simulation.o: Simulation.cpp Include/Simulation.hpp \
 		Include/User.hpp \
 		Include/Node.hpp \
-		Include/Chain.hpp \
 		Include/Block.hpp \
 		Include/Transaction.hpp \
 		Include/Rsa.h
@@ -421,7 +427,6 @@ Simulation.o: Simulation.cpp Include/Simulation.hpp \
 StakePool.o: StakePool.cpp Include/StakePool.hpp \
 		Include/User.hpp \
 		Include/Node.hpp \
-		Include/Chain.hpp \
 		Include/Block.hpp \
 		Include/Transaction.hpp \
 		Include/Rsa.h
@@ -429,10 +434,11 @@ StakePool.o: StakePool.cpp Include/StakePool.hpp \
 
 User.o: User.cpp Include/User.hpp \
 		Include/Node.hpp \
-		Include/Chain.hpp \
 		Include/Block.hpp \
 		Include/Transaction.hpp \
-		Include/Rsa.h
+		Include/Rsa.h \
+		Include/GenesisBlock.hpp \
+		Include/StakePool.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o User.o User.cpp
 
 Block.o: Block.cpp Include/Block.hpp \
@@ -445,7 +451,6 @@ Rsa.o: Rsa.cpp Include/Rsa.h
 Transaction.o: Transaction.cpp Include/Transaction.hpp \
 		Include/User.hpp \
 		Include/Node.hpp \
-		Include/Chain.hpp \
 		Include/Block.hpp \
 		Include/Rsa.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Transaction.o Transaction.cpp
@@ -455,9 +460,11 @@ GenesisBlock.o: GenesisBlock.cpp Include/GenesisBlock.hpp \
 		Include/Transaction.hpp \
 		Include/User.hpp \
 		Include/Node.hpp \
-		Include/Chain.hpp \
 		Include/Rsa.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o GenesisBlock.o GenesisBlock.cpp
+
+moc_Block.o: moc_Block.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Block.o moc_Block.cpp
 
 ####### Install
 

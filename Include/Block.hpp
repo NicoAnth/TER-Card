@@ -3,9 +3,12 @@
 #include "Transaction.hpp"
 #include <QByteArray>
 #include <QList>
-#include <QString>
+#include <QLayout>
+#include <QWidget>
 
-class Block {
+class Block: public QWidget {
+
+Q_OBJECT 
 
 private:
   const long long signature;
@@ -18,18 +21,32 @@ protected:
   static int count;
   QByteArray hash_cur;
 
+  /* QT */
+  int positionx;
+  int positiony;
+  int lastBlockPosx;
+  int lastBlockPosy;
+
 public:
 
   //Constructor
   Block();
-  Block(QByteArray hashPrev,long long slotLeaderSignature, QByteArray m_Hash,QList<Transaction> m_transactionList);
+  Block(QByteArray hashPrev,long long slotLeaderSignature, QByteArray m_Hash,QList<Transaction> m_transactionList, int lastposX, int lastposY);
   virtual ~Block(){};
+
   /* getter */
   QList<Transaction> const getTransactionList();
   QByteArray getHash();
   QString toString();
 
   Transaction AddTransaction(Transaction t);
+
+  /* Qt */
+
+  void paintEvent(QPaintEvent *);
+  int getPositionx();
+  int getPositiony();
+
 
 };
 #endif

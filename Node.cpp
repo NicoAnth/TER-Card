@@ -33,6 +33,8 @@ NodeClass::NodeClass(User* m_owner,QList<Block*> &m_blockChain,QList <Transactio
     cout << e.what() << '\n';
   }
   blockChain = m_blockChain;
+  GenesisBlock& geBlock = dynamic_cast<GenesisBlock&> (*blockChain.first());
+  geBlock.addStaker(*this,m_stake);
   stake = m_stake;
   online = true;
   isSlotLeader = false;

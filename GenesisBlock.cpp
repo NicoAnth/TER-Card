@@ -25,3 +25,6 @@ void GenesisBlock::addStaker(NodeClass node, int stake){
 void GenesisBlock::addPublicKey(std::pair<long,long> pK){
     publicKey.append(pK);
 }
+/* void GenesisBlock::updateStaker(NodeClass node, int stake,int prec_value ){
+    stakers.replace(stakers.indexOf(std::make_pair(node,prec_value)),std::make_pair(node,prec_value));
+} */

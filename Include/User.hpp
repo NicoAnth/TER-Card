@@ -18,9 +18,9 @@ class User {
     static int count;
     int id;
     std::pair<long long, long long> publicKey;
-    int totalStakes;
-    int useableStakes;
-    int pooledStakes;
+    float totalStakes;
+    float useableStakes;
+    float pooledStakes;
     NodeClass* connectedNode;
     StakePool* connectedPool;
 
@@ -29,9 +29,11 @@ class User {
     ~User();
     
     std::tuple<long long, long long, long long> const getPrivateKey() const;
-    Transaction createTransaction(User& m_receiver, int m_amount);
+    Transaction createTransaction(User* m_receiver, int m_amount);
     NodeClass createNode(NodeClass onlineNode, int amount);
     void joinStakePool(StakePool& sp, int stake);
+    void addUseableStakes(float addus);
+    void addtotalStakes(float addts);
 
 
   private:
@@ -42,4 +44,5 @@ class User {
 inline bool operator <(const User &u, const User &u2){
   return u.useableStakes < u2.useableStakes;
 }
+long long hashtoll(std::string hash);
 #endif

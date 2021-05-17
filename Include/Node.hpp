@@ -16,15 +16,15 @@ private:
   const User* owner;
   const int minimalStake = MINIMAL_STAKE;
   int stake;
-  QList<Block*> blockChain;
-  QList <Transaction> ledger;
+  static QList<Block*> blockChain;
+  static QList <Transaction> ledger;
   bool online;
   bool isSlotLeader;
 
 public:
 
   /* Constructor */
-  NodeClass(User* m_owner,QList<Block*> m_blockChain,QList <Transaction> m_ledger, int stake);
+  NodeClass(User* m_owner,QList<Block*> &m_blockChain,QList <Transaction> m_ledger, int stake);
 
   /* Slot leader methods */
   NodeClass electSlotLeader();
@@ -33,12 +33,13 @@ public:
   long long signBlock();  
 
   /* common methods */
-  void execTransaction(User sender, User receiver, int amount);
+  void execTransaction(User sender, User receiver, int amount, float fees);
   bool verifySignature(User m_user,Transaction t, long long Hash);
+  void receiveTransactionRequest(Transaction t);
   QByteArray computeLastBlockHash();
 
   /* getter */
-  QList<Block*> getBlockChain(){
+  QList<Block*> &getBlockChain(){
     return blockChain;
   }
   QList <Transaction> getLedger(){

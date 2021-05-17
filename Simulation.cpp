@@ -1,5 +1,6 @@
 #include "Include/Simulation.hpp"
 
-void giveMoney(User muser, int amount){
-    muser.useableStakes += amount;
+void giveMoney(User& muser, int amount){
+    muser.addtotalStakes(amount);
+    muser.addUseableStakes(amount);
 }

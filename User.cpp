@@ -35,14 +35,21 @@ const std::tuple<long long, long long, long long> User::getPrivateKey() const {
   return privateKey;
 }
 
-Transaction User::createTransaction(User& m_receiver, int m_amount){
+void User::addUseableStakes(float addus){
+  useableStakes += addus;
+}
+void User::addtotalStakes(float addts){
+  totalStakes += addts;
+}
 
-  Transaction t(*this,m_receiver,m_amount);
+Transaction User::createTransaction(User* m_receiver, int m_amount){
+
+  Transaction t(this,m_receiver,m_amount);
   QString s = s.fromStdString(t.toString());
   QByteArray hash = QCryptographicHash::hash(s.toLocal8Bit(),QCryptographicHash::Sha256);
   qDebug()<< hash.toHex();
   std::string hashString = hash.toHex(0).toStdString();
-  long long ll = std::stoll(hashString);
+  long long ll = hashtoll(hashString);
   long long signature = encrypt(ll,publicKey,privateKey);
   t.setSignature(signature);
   return t;
@@ -77,4 +84,15 @@ void User::joinStakePool(StakePool& sp, int stake){
   sp.addUser(*this,stake);
 }
 
+long long hashtoll(std::string hash){
+
+  std::string sResult = "";
+
+  for(std::string::iterator it = hash.begin();it!=hash.end();++it){
+    if(*it>47 && *it<58){
+      sResult += *it;    
+    }
+  }
+  return std::stoll(sResult.substr(sResult.size()-5));
+}
 

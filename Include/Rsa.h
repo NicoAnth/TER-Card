@@ -8,7 +8,6 @@
 #include <time.h>
 
 using namespace std;
-
 long long gcd(long long a, long long b);
 bool checkProperty(std::pair<long long,long long> publicKey, std::tuple<long long,long long,long long> b);
 long long encrypt(long long msg, std::pair<long long,long long> publicKey, std::tuple<long long,long long,long long> privateKey );

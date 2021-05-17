@@ -7,7 +7,7 @@ std::string Transaction::toString(){
     return std::to_string(this->amount) + std::to_string(this->id);
 }
 
-Transaction::Transaction(User& m_sender, User& m_receiver, int m_amount):sender(m_sender),receiver(m_receiver),id(count){
+Transaction::Transaction(User* m_sender, User* m_receiver, int m_amount):sender(m_sender),receiver(m_receiver),id(count){
     
     amount = m_amount;
     fees = 0.0001*amount;
@@ -15,10 +15,10 @@ Transaction::Transaction(User& m_sender, User& m_receiver, int m_amount):sender(
     
 }
 
-User& Transaction::getSender(){
+User* Transaction::getSender(){
     return sender;
 }
-User& Transaction::getReceiver(){
+User* Transaction::getReceiver(){
     return receiver;
 }
 

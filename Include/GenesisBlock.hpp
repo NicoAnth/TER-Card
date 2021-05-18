@@ -8,7 +8,7 @@
 #define TRANSACTION_MAX 3
 
 class GenesisBlock : public Block {
-
+    
     private:
         QList<std::pair<long,long>> publicKey;
         QList<std::pair<NodeClass,int>> stakers;
@@ -24,5 +24,7 @@ class GenesisBlock : public Block {
         void addStaker(NodeClass node, int stake);
         void addPublicKey(std::pair<long,long>);
         void updateStaker(NodeClass node, int stake, int prec_value);
+
+        void paintEvent(QPaintEvent *);
 };
 #endif

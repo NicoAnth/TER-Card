@@ -101,9 +101,9 @@ bool NodeClass::createBlock(){
         blockTransaction.append(*i);
         totalFees += i->getFees();
       }
-        Block newBlock((*blockChain.last()).getHash(),signBlock(),computeLastBlockHash(),blockTransaction,
+        Block* newBlock = new Block((*blockChain.last()).getHash(),signBlock(),computeLastBlockHash(),blockTransaction,
         (*blockChain.last()).getPositionx(),(*blockChain.last()).getPositiony());
-        blockChain.append(&newBlock);
+        blockChain.append(newBlock);
         stake += totalFees;
         electSlotLeader();
         return true;

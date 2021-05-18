@@ -37,15 +37,16 @@ int main (int argc, char **argv )
   firstNode.receiveTransactionRequest(toto.createTransaction(&Lolo,40));
 
   firstNode.createBlock();
-
+  firstNode.createBlock();
 
   auto myWindow= new QWidget();
-  myWindow->setMinimumHeight(1000);
-  myWindow->setMinimumWidth(2000);
-
-  QPaintEvent hey(QRect(10,20,200,200));
-  geBlock.paintEvent(&hey);
+  myWindow->setMinimumHeight(750);
+  myWindow->setMinimumWidth(1400);
   geBlock.setParent(myWindow);
+  QList<Block *>::iterator i;
+  for(i=firstNode.getBlockChain().begin();i!=firstNode.getBlockChain().end();++i){
+    (*(*i)).setParent(myWindow);
+  }
   myWindow->show();
   return app.exec();
 }

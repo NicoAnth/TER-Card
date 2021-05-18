@@ -2,6 +2,7 @@
 #include <Include/Node.hpp>
 #include <QCryptographicHash>
 #include <QString>
+#include <QPainter>
 
 GenesisBlock::GenesisBlock(){
     QString hash_0("42");
@@ -24,6 +25,13 @@ void GenesisBlock::addStaker(NodeClass node, int stake){
 
 void GenesisBlock::addPublicKey(std::pair<long,long> pK){
     publicKey.append(pK);
+}
+
+void GenesisBlock::paintEvent(QPaintEvent *){
+    QPainter p(this);
+    QPen pen;
+    p.setBrush(Qt::blue);
+    p.drawRect(QRect(positionx,positiony,100,100));
 }
 /* void GenesisBlock::updateStaker(NodeClass node, int stake,int prec_value ){
     stakers.replace(stakers.indexOf(std::make_pair(node,prec_value)),std::make_pair(node,prec_value));

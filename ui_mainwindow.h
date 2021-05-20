@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGridLayout>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -29,6 +30,7 @@ public:
     QWidget *centralwidget;
     QGridLayout *gridLayout;
     QPushButton *pushButton;
+    QHBoxLayout *v1;
     QMenuBar *menubar;
     QMenu *menuMenu;
     QMenu *menuR_initialiser;
@@ -51,7 +53,12 @@ public:
         pushButton = new QPushButton(centralwidget);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
 
-        gridLayout->addWidget(pushButton, 0, 0, 1, 1);
+        gridLayout->addWidget(pushButton, 1, 0, 1, 1);
+
+        v1 = new QHBoxLayout();
+        v1->setObjectName(QString::fromUtf8("v1"));
+
+        gridLayout->addLayout(v1, 0, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);

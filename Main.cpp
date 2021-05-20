@@ -8,6 +8,7 @@
 #include "Include/Rsa.h"
 #include "Include/GenesisBlock.hpp"
 #include "Include/Simulation.hpp"
+#include "ui_mainwindow.h"
 #include <QPaintEvent>
 
 using namespace std;
@@ -17,6 +18,13 @@ int main (int argc, char **argv )
   QApplication app(argc, argv);
 
   MainWindow* window = new MainWindow();
+  User blop(*(window->geBlock));
+  window->firstNode->receiveTransactionRequest(window->firstUser->createTransaction(&blop,10));
+  window->firstNode->receiveTransactionRequest(window->firstUser->createTransaction(&blop,15));
+  window->firstNode->receiveTransactionRequest(window->firstUser->createTransaction(&blop,5));
+  window->firstNode->createBlock();
+  window->getUi()->v1->addWidget(window->firstNode->getBlockChain().last());
+  //window->firstNode->getBlockChain().last()->setParent()
   window->show();
 
  /*  //Init

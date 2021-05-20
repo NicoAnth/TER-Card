@@ -11,7 +11,7 @@
 class User;
 class StakePool;
 
-class NodeClass:public QObject {
+class NodeClass:public QWidget {
     Q_OBJECT
 private:
 

@@ -18,12 +18,15 @@
     <bool>true</bool>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+    <item row="1" column="0">
      <widget class="QPushButton" name="pushButton">
       <property name="text">
        <string>Créer utilisateur</string>
       </property>
      </widget>
+    </item>
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="v1"/>
     </item>
    </layout>
   </widget>

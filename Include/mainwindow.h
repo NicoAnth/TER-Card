@@ -20,15 +20,15 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void initialize();
-
-private:
-    Ui::MainWindow *ui;
     GenesisBlock* geBlock;
     QList <Block*> *blockchain;
     QList<Transaction> *ledger;
     User *firstUser;
     NodeClass *firstNode;
+    Ui::MainWindow* getUi();
+
+private:
+    Ui::MainWindow *ui;
 };
 
 #endif // MAINWINDOW_H

@@ -21,7 +21,7 @@ Block::Block(QByteArray hashPrev, long long slotLeaderSignature, QByteArray m_Ha
 }
 
 Transaction Block::AddTransaction(Transaction t){
-    
+
     this->transactionList.append(t);
     return t;
 }

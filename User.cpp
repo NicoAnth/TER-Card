@@ -5,6 +5,7 @@
 #include <bits/stdc++.h>
 #include <QByteArray>
 #include <qdebug.h>
+#include <QPainter>
 
 class requireEnoughUseableStake: public std::exception{
   virtual const char* what() const throw()
@@ -94,3 +95,8 @@ long long hashtoll(std::string hash){
   return std::stoll(sResult.substr(sResult.size()-5));
 }
 
+void User::paintEvent(QPaintEvent *){
+    QPainter painter(this);
+    painter.setBrush(Qt::red);
+    painter.drawRect(QRect(200,400,100,100));
+}

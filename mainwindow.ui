@@ -17,28 +17,15 @@
    <property name="enabled">
     <bool>true</bool>
    </property>
-   <widget class="QWidget" name="verticalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>530</y>
-      <width>241</width>
-      <height>80</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QPushButton" name="pushButton">
-       <property name="mouseTracking">
-        <bool>false</bool>
-       </property>
-       <property name="text">
-        <string>Créer un utilisateur</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>Créer utilisateur</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -53,17 +40,27 @@
     <property name="title">
      <string>Menu</string>
     </property>
-    <addaction name="actionR_initialiser"/>
+    <widget class="QMenu" name="menuR_initialiser">
+     <property name="title">
+      <string>Réinitialiser</string>
+     </property>
+     <addaction name="separator"/>
+    </widget>
+    <addaction name="menuR_initialiser"/>
    </widget>
    <addaction name="menuMenu"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionR_initialiser">
    <property name="checkable">
     <bool>false</bool>
    </property>
    <property name="text">
     <string>Réinitialiser</string>
+   </property>
+  </action>
+  <action name="actionHey">
+   <property name="text">
+    <string>Hey</string>
    </property>
   </action>
  </widget>

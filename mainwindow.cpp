@@ -1,12 +1,23 @@
 #include "Include/mainwindow.h"
 #include "ui_mainwindow.h"
+#include "Include/Simulation.hpp"
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
-{
+MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWindow){
+
     ui->setupUi(this);
+    geBlock = new GenesisBlock();
+    blockchain = new QList <Block*>;
+    ledger = new QList<Transaction>;
+    blockchain->append(geBlock);
+    firstUser = new User(*geBlock);
+    giveMoney(*firstUser,100);
+    firstNode = new NodeClass(firstUser,*blockchain,*ledger,100);
     
+    //setMinimumSize(1900,1000);
+    geBlock->setParent(this);
+    firstUser->setParent(this);
+    firstNode->setParent(this);
+
 }
 
 MainWindow::~MainWindow()

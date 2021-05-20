@@ -6,13 +6,14 @@
 #include "Transaction.hpp"
 #include "Rsa.h"
 #include <QObject>
+#include <QWidget>
 #include <QCryptographicHash>
 
 class GenesisBlock;
 class StakePool;
 class NodeClass;
 
-class User: QObject {
+class User: public QWidget {
   
   Q_OBJECT
   
@@ -37,6 +38,7 @@ class User: QObject {
     void joinStakePool(StakePool& sp, int stake);
     void addUseableStakes(float addus);
     void addtotalStakes(float addts);
+    void paintEvent(QPaintEvent *);
 
 
   private:

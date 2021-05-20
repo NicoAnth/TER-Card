@@ -16,10 +16,10 @@ int main (int argc, char **argv )
 {
   QApplication app(argc, argv);
 
-  /* MainWindow* window = new MainWindow();
-  window->show(); */
+  MainWindow* window = new MainWindow();
+  window->show();
 
-  //Init
+ /*  //Init
   GenesisBlock geBlock;
   QList <Block*> blockChain;
   QList<Transaction> transaction;
@@ -52,6 +52,6 @@ int main (int argc, char **argv )
   for(i=firstNode->getBlockChain().begin();i!=firstNode->getBlockChain().end();++i){
     (*(*i)).setParent(myWindow);
   }
-  myWindow->show();
+  myWindow->show(); */
   return app.exec();
 }

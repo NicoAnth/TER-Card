@@ -12,12 +12,11 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QStatusBar>
-#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -26,13 +25,13 @@ class Ui_MainWindow
 {
 public:
     QAction *actionR_initialiser;
+    QAction *actionHey;
     QWidget *centralwidget;
-    QWidget *verticalLayoutWidget;
-    QVBoxLayout *verticalLayout;
+    QGridLayout *gridLayout;
     QPushButton *pushButton;
     QMenuBar *menubar;
     QMenu *menuMenu;
-    QStatusBar *statusbar;
+    QMenu *menuR_initialiser;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -42,20 +41,17 @@ public:
         actionR_initialiser = new QAction(MainWindow);
         actionR_initialiser->setObjectName(QString::fromUtf8("actionR_initialiser"));
         actionR_initialiser->setCheckable(false);
+        actionHey = new QAction(MainWindow);
+        actionHey->setObjectName(QString::fromUtf8("actionHey"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         centralwidget->setEnabled(true);
-        verticalLayoutWidget = new QWidget(centralwidget);
-        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(420, 530, 241, 80));
-        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        pushButton = new QPushButton(verticalLayoutWidget);
+        gridLayout = new QGridLayout(centralwidget);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        pushButton = new QPushButton(centralwidget);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setMouseTracking(false);
 
-        verticalLayout->addWidget(pushButton);
+        gridLayout->addWidget(pushButton, 0, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -63,13 +59,13 @@ public:
         menubar->setGeometry(QRect(0, 0, 1076, 23));
         menuMenu = new QMenu(menubar);
         menuMenu->setObjectName(QString::fromUtf8("menuMenu"));
+        menuR_initialiser = new QMenu(menuMenu);
+        menuR_initialiser->setObjectName(QString::fromUtf8("menuR_initialiser"));
         MainWindow->setMenuBar(menubar);
-        statusbar = new QStatusBar(MainWindow);
-        statusbar->setObjectName(QString::fromUtf8("statusbar"));
-        MainWindow->setStatusBar(statusbar);
 
         menubar->addAction(menuMenu->menuAction());
-        menuMenu->addAction(actionR_initialiser);
+        menuMenu->addAction(menuR_initialiser->menuAction());
+        menuR_initialiser->addSeparator();
 
         retranslateUi(MainWindow);
 
@@ -80,8 +76,10 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
         actionR_initialiser->setText(QApplication::translate("MainWindow", "R\303\251initialiser", nullptr));
-        pushButton->setText(QApplication::translate("MainWindow", "Cr\303\251er un utilisateur", nullptr));
+        actionHey->setText(QApplication::translate("MainWindow", "Hey", nullptr));
+        pushButton->setText(QApplication::translate("MainWindow", "Cr\303\251er utilisateur", nullptr));
         menuMenu->setTitle(QApplication::translate("MainWindow", "Menu", nullptr));
+        menuR_initialiser->setTitle(QApplication::translate("MainWindow", "R\303\251initialiser", nullptr));
     } // retranslateUi
 
 };

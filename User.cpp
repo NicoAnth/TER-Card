@@ -9,7 +9,7 @@
 class requireEnoughUseableStake: public std::exception{
   virtual const char* what() const throw()
   {
-    return "The user doesn't have enough useable stake to perfomr this operation";
+    return "The user doesn't have enough useable stake to perform this operation";
   }
 }reus;
 

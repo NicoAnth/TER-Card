@@ -38,7 +38,7 @@ NodeClass::NodeClass(User* m_owner,QList<Block*> &m_blockChain,QList <Transactio
   stake = m_stake;
   online = true;
   isSlotLeader = false;
-
+  
 }
 
 NodeClass NodeClass::electSlotLeader()

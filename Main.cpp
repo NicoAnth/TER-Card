@@ -2,6 +2,7 @@
 #include <QMainWindow>
 #include <QWidget>
 #include <QPushButton>
+#include <Include/mainwindow.h>
 #include "Include/Node.hpp"
 #include "Include/User.hpp"
 #include "Include/Rsa.h"
@@ -14,6 +15,9 @@ using namespace std;
 int main (int argc, char **argv )
 {
   QApplication app(argc, argv);
+
+  /* MainWindow* window = new MainWindow();
+  window->show(); */
 
   //Init
   GenesisBlock geBlock;
@@ -42,7 +46,8 @@ int main (int argc, char **argv )
   auto myWindow= new QWidget();
   myWindow->setMinimumHeight(750);
   myWindow->setMinimumWidth(1400);
-  geBlock.setParent(myWindow);
+  myWindow->resize(1000,1900);
+  
   QList<Block *>::iterator i;
   for(i=firstNode.getBlockChain().begin();i!=firstNode.getBlockChain().end();++i){
     (*(*i)).setParent(myWindow);

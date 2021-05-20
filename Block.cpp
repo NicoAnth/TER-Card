@@ -3,18 +3,20 @@
 #include <QPainter>
 #include <QBrush>
 #include <QPaintEvent>
+#include <QSize>
 
 int Block::count = 0;
 
 
 Block::Block():signature(0){};
 
-Block::Block(QByteArray hashPrev, long long slotLeaderSignature, QByteArray m_Hash,QList<Transaction> m_transactionList,int lastPosx, int lastPosy): signature(slotLeaderSignature),hash_prev(hashPrev), transactionList(m_transactionList),id(count),hash_cur(m_Hash),lastBlockPosx(lastPosx),lastBlockPosy(lastPosy){
-    count += 1;
+Block::Block(QByteArray hashPrev, long long slotLeaderSignature, QByteArray m_Hash,QList<Transaction> m_transactionList,int lastPosx, int lastPosy,QWidget *parent): signature(slotLeaderSignature),hash_prev(hashPrev), transactionList(m_transactionList),id(count),hash_cur(m_Hash),lastBlockPosx(lastPosx),lastBlockPosy(lastPosy){
+
     positionx = lastBlockPosx + 150;
     positiony = lastBlockPosy;
-    QPaintEvent a(QRect(10,50,800,200));
-    paintEvent(&a);
+    this->setParent(parent);
+    setMinimumSize(100,100);
+    count += 1;
 
 }
 

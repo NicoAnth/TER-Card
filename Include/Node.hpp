@@ -2,6 +2,7 @@
 #define NODE_H
 #include <QList>
 #include <exception>
+#include <QObject>
 #include "Block.hpp"
 
 #define TRANSACTION_MAX 3
@@ -11,6 +12,7 @@ class User;
 class StakePool;
 
 class NodeClass {
+
 private:
 
   const User* owner;

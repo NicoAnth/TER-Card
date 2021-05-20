@@ -7,8 +7,8 @@
 GenesisBlock::GenesisBlock(){
     QString hash_0("42");
     hash_cur = QCryptographicHash::hash(hash_0.toLocal8Bit(),QCryptographicHash::Sha256);
-    positionx = 150;
-    positiony = 125;
+    positionx = 100;
+    positiony = 300;
     count += 1;
 }
 
@@ -35,4 +35,4 @@ void GenesisBlock::paintEvent(QPaintEvent *){
 }
 /* void GenesisBlock::updateStaker(NodeClass node, int stake,int prec_value ){
     stakers.replace(stakers.indexOf(std::make_pair(node,prec_value)),std::make_pair(node,prec_value));
-} */
+} */    

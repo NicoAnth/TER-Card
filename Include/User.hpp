@@ -30,7 +30,7 @@ class User {
     
     std::tuple<long long, long long, long long> const getPrivateKey() const;
     Transaction createTransaction(User* m_receiver, int m_amount);
-    NodeClass createNode(NodeClass onlineNode, int amount);
+    NodeClass createNode(NodeClass onlineNode, int amount = 10);
     void joinStakePool(StakePool& sp, int stake);
     void addUseableStakes(float addus);
     void addtotalStakes(float addts);

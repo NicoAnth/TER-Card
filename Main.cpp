@@ -32,24 +32,24 @@ int main (int argc, char **argv )
 
 
   //Create Node
-  NodeClass firstNode(&toto,blockChain, transaction,0);
-  firstNode.setSlotLeader(true);
+  NodeClass* firstNode = new NodeClass(&toto,blockChain, transaction,10);
+  firstNode->setSlotLeader(true);
 
   //Create transact'
-  firstNode.receiveTransactionRequest(toto.createTransaction(&Lolo,50));
-  firstNode.receiveTransactionRequest(Lolo.createTransaction(&toto,20));
-  firstNode.receiveTransactionRequest(toto.createTransaction(&Lolo,40));
+  firstNode->receiveTransactionRequest(toto.createTransaction(&Lolo,50));
+  firstNode->receiveTransactionRequest(Lolo.createTransaction(&toto,20));
+  firstNode->receiveTransactionRequest(toto.createTransaction(&Lolo,40));
 
-  firstNode.createBlock();
-  firstNode.createBlock();
+  firstNode->createBlock();
+  firstNode->createBlock();
 
   auto myWindow= new QWidget();
   myWindow->setMinimumHeight(750);
   myWindow->setMinimumWidth(1400);
-  myWindow->resize(1000,1900);
+  myWindow->resize(1800,1000);
   
   QList<Block *>::iterator i;
-  for(i=firstNode.getBlockChain().begin();i!=firstNode.getBlockChain().end();++i){
+  for(i=firstNode->getBlockChain().begin();i!=firstNode->getBlockChain().end();++i){
     (*(*i)).setParent(myWindow);
   }
   myWindow->show();

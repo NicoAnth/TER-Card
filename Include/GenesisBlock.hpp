@@ -11,17 +11,17 @@ class GenesisBlock : public Block {
     
     private:
         QList<std::pair<long,long>> publicKey;
-        QList<std::pair<NodeClass,int>> stakers;
+        QList<std::pair<NodeClass*,int>> stakers;
     public:
         GenesisBlock();
         ~GenesisBlock(){};
 
         /* getters */
         QList<std::pair<long,long>> const getPublicKeys();
-        QList<std::pair<NodeClass,int>> const getStakers();
+        QList<std::pair<NodeClass*,int>> const getStakers();
 
         /* setters */
-        void addStaker(NodeClass node, int stake);
+        void addStaker(NodeClass* node, int stake);
         void addPublicKey(std::pair<long,long>);
         void updateStaker(NodeClass node, int stake, int prec_value);
 

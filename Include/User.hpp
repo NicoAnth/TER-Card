@@ -5,14 +5,17 @@
 #include "Node.hpp"
 #include "Transaction.hpp"
 #include "Rsa.h"
+#include <QObject>
 #include <QCryptographicHash>
 
 class GenesisBlock;
 class StakePool;
 class NodeClass;
 
-class User {
-
+class User: QObject {
+  
+  Q_OBJECT
+  
   public:
 
     static int count;
@@ -30,7 +33,7 @@ class User {
     
     std::tuple<long long, long long, long long> const getPrivateKey() const;
     Transaction createTransaction(User* m_receiver, int m_amount);
-    NodeClass createNode(NodeClass onlineNode, int amount = 10);
+    NodeClass* createNode(NodeClass onlineNode, int amount = 10);
     void joinStakePool(StakePool& sp, int stake);
     void addUseableStakes(float addus);
     void addtotalStakes(float addts);

@@ -11,8 +11,8 @@
 class User;
 class StakePool;
 
-class NodeClass {
-
+class NodeClass:public QObject {
+    Q_OBJECT
 private:
 
   const User* owner;
@@ -29,14 +29,14 @@ public:
   NodeClass(User* m_owner,QList<Block*> &m_blockChain,QList <Transaction> m_ledger, int stake);
 
   /* Slot leader methods */
-  NodeClass electSlotLeader();
+  NodeClass* electSlotLeader();
   bool createBlock();
   bool slotLeaderVerification();
   long long signBlock();  
 
   /* common methods */
-  void execTransaction(User sender, User receiver, int amount, float fees);
-  bool verifySignature(User m_user,Transaction t, long long Hash);
+  void execTransaction(User* sender, User* receiver, int amount, float fees);
+  bool verifySignature(User* m_user,Transaction t, long long Hash);
   void receiveTransactionRequest(Transaction t);
   QByteArray computeLastBlockHash();
 

@@ -33,18 +33,19 @@ NodeClass::NodeClass(User* m_owner,QList<Block*> &m_blockChain,QList <Transactio
     cout << e.what() << '\n';
   }
   blockChain = m_blockChain;
+  ledger= m_ledger;
   GenesisBlock& geBlock = dynamic_cast<GenesisBlock&> (*blockChain.first());
-  geBlock.addStaker(*this,m_stake);
+  geBlock.addStaker(this,m_stake);
   stake = m_stake;
   online = true;
   isSlotLeader = false;
   
 }
 
-NodeClass NodeClass::electSlotLeader()
+NodeClass* NodeClass::electSlotLeader()
 {
   GenesisBlock& geBlock = dynamic_cast<GenesisBlock&> (*blockChain.first());
-  QListIterator<std::pair<NodeClass,int>> i(geBlock.getStakers());
+  QListIterator<std::pair<NodeClass*,int>> i(geBlock.getStakers());
   int sum=0;
 
   srand (time(NULL));
@@ -59,15 +60,15 @@ NodeClass NodeClass::electSlotLeader()
   i.toFront();
   while(i.hasNext())
   { 
-    std::pair<NodeClass,int> next = i.next();
+    std::pair<NodeClass*,int> next = i.next();
     sum += next.second;
     if(nextSlotLeader < sum ){
       this->isSlotLeader = false;
-      next.first.isSlotLeader = true;
+      next.first->isSlotLeader = true;
       return next.first;
     }
   }
-  return *this;
+  return this;
 }
 
 bool NodeClass::slotLeaderVerification()
@@ -75,7 +76,7 @@ bool NodeClass::slotLeaderVerification()
   if(isSlotLeader){
     QList<Transaction>::Iterator i;
     for(i=(ledger.begin()+ledger.size())-TRANSACTION_MAX; i != ledger.end(); ++i){
-      if(!verifySignature(*i->getSender(),*i,i->getSignature())){
+      if(!verifySignature(i->getSender(),*i,i->getSignature())){
         qDebug()<< "Slot leader returned : Wrong Signature";
           return false;
       }
@@ -97,7 +98,7 @@ bool NodeClass::createBlock(){
       QList<Transaction>::iterator i;
       int totalFees=0;
       for(i=(ledger.begin()+ledger.size())-TRANSACTION_MAX;i!= ledger.end();++i){
-        execTransaction(*i->getSender(),*i->getReceiver(),i->getAmount(),i->getFees());
+        execTransaction(i->getSender(),i->getReceiver(),i->getAmount(),i->getFees());
         blockTransaction.append(*i);
         totalFees += i->getFees();
       }
@@ -115,21 +116,21 @@ bool NodeClass::createBlock(){
     }
 }
 
-void NodeClass::execTransaction(User sender, User receiver, int amount, float fees)
+void NodeClass::execTransaction(User* sender, User* receiver, int amount, float fees)
 {
-  sender.useableStakes -= amount+fees;
-  sender.totalStakes -= amount+fees;
-  receiver.useableStakes += amount;
-  receiver.totalStakes -= amount;
+  sender->useableStakes -= amount+fees;
+  sender->totalStakes -= amount+fees;
+  receiver->useableStakes += amount;
+  receiver->totalStakes -= amount;
 }
 
-bool NodeClass::verifySignature( User m_user,Transaction t, long long encryptedHash){
+bool NodeClass::verifySignature( User* m_user,Transaction t, long long encryptedHash){
 
   QString s = s.fromStdString(t.toString());
   QByteArray hash = QCryptographicHash::hash(s.toLocal8Bit(),QCryptographicHash::Sha256);
   std::string hashString = hash.toHex(0).toStdString();
   long long ll = hashtoll(hashString);
-  long long decryptedHash = decrypt(encryptedHash,m_user.publicKey);
+  long long decryptedHash = decrypt(encryptedHash,m_user->publicKey);
   
   return ll == decryptedHash; 
 }
@@ -153,9 +154,10 @@ long long NodeClass::signBlock(){
   QByteArray hash = computeLastBlockHash();
   std::string hashString = hash.toHex(0).toStdString();
   long long ll = hashtoll(hashString);
-  return encrypt(ll,owner->publicKey,owner->getPrivateKey());
+    return encrypt(ll,owner->publicKey,owner->getPrivateKey());
   }
   else qDebug()<< "The node must be the slot leader to sign a block";
+  return -1;
 }
 
 void NodeClass::receiveTransactionRequest(Transaction t){

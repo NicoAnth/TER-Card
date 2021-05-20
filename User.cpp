@@ -27,9 +27,7 @@ User::User(GenesisBlock& geblock)
   count++;
 };
 
-User::~User(){
-  count--;
-}
+User::~User(){}
 
 const std::tuple<long long, long long, long long> User::getPrivateKey() const {
   return privateKey;
@@ -55,7 +53,7 @@ Transaction User::createTransaction(User* m_receiver, int m_amount){
   return t;
 }
 
-NodeClass User::createNode(NodeClass onlineNode, int stake){
+NodeClass* User::createNode(NodeClass onlineNode, int stake){
   
   try{
     if(stake<useableStakes){
@@ -65,8 +63,8 @@ NodeClass User::createNode(NodeClass onlineNode, int stake){
   catch(exception &e){
     cout << e.what() << '\n';
   }
-  NodeClass node(this,onlineNode.getBlockChain(),onlineNode.getLedger(),stake);
-  connectedNode = &node;
+  NodeClass* node = new NodeClass(this,onlineNode.getBlockChain(),onlineNode.getLedger(),stake);
+  connectedNode = node;
   return node;
 }
 
@@ -81,7 +79,7 @@ void User::joinStakePool(StakePool& sp, int stake){
     cout << e.what() << '\n';
   }
   connectedPool = &sp;
-  sp.addUser(*this,stake);
+  sp.addUser(this,stake);
 }
 
 long long hashtoll(std::string hash){

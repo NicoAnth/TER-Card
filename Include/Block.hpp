@@ -32,7 +32,7 @@ public:
   //Constructor
   Block();
   Block(QByteArray hashPrev,long long slotLeaderSignature, QByteArray m_Hash,QList<Transaction> m_transactionList, int lastposX, int lastposY,QWidget *parent = nullptr);
-  virtual ~Block(){};
+  virtual ~Block(){}
 
   /* getter */
   QList<Transaction> const getTransactionList();

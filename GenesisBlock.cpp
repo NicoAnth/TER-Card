@@ -15,11 +15,11 @@ GenesisBlock::GenesisBlock(){
 QList<std::pair<long,long>> const GenesisBlock::getPublicKeys(){
     return publicKey;
 }
-QList<std::pair<NodeClass,int>> const GenesisBlock::getStakers(){
+QList<std::pair<NodeClass*,int>> const GenesisBlock::getStakers(){
     return stakers;
 }
 
-void GenesisBlock::addStaker(NodeClass node, int stake){
+void GenesisBlock::addStaker(NodeClass* node, int stake){
     stakers.append(std::make_pair(node,stake));
 }
 

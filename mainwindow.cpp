@@ -11,12 +11,12 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
     blockchain->append(geBlock);
     firstUser = new User(*geBlock);
     giveMoney(*firstUser,100);
-    firstNode = new NodeClass(firstUser,*blockchain,*ledger,100);
+    firstNode = new NodeClass(firstUser,blockchain,*ledger,100);
+    blockchainDraw = new BlockchainDraw(blockchain);
     firstNode->setSlotLeader(true);
 
-    ui->widget->setMinimumSize(1600,900);
-    
-    geBlock->setParent(ui->blockW);
+    ui->widget->setMinimumSize(1000,600);
+    ui->h1->addWidget(blockchainDraw);
     ui->h2->addWidget(firstUser);
     ui->h2->addWidget(firstNode);
 

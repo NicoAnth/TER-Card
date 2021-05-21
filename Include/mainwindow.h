@@ -8,6 +8,7 @@
 #include "Transaction.hpp"
 #include "User.hpp"
 #include "Node.hpp"
+#include "BlockchainDraw.hpp"
 
 namespace Ui {
 class MainWindow;
@@ -25,6 +26,7 @@ public:
     QList<Transaction> *ledger;
     User *firstUser;
     NodeClass *firstNode;
+    BlockchainDraw *blockchainDraw;
     Ui::MainWindow* getUi();
 
 private:

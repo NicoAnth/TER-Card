@@ -43,7 +43,7 @@ public:
 
   /* Qt */
 
-  void paintEvent(QPaintEvent *);
+  //void paintEvent(QPaintEvent *);
   int getPositionx();
   int getPositiony();
 

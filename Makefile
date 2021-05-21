@@ -61,10 +61,12 @@ SOURCES       = Main.cpp \
 		Rsa.cpp \
 		Transaction.cpp \
 		GenesisBlock.cpp \
-		mainwindow.cpp moc_Block.cpp \
+		mainwindow.cpp \
+		BlockchainDraw.cpp moc_Block.cpp \
 		moc_Node.cpp \
 		moc_User.cpp \
-		moc_mainwindow.cpp
+		moc_mainwindow.cpp \
+		moc_BlockchainDraw.cpp
 OBJECTS       = Main.o \
 		Node.o \
 		Simulation.o \
@@ -75,10 +77,12 @@ OBJECTS       = Main.o \
 		Transaction.o \
 		GenesisBlock.o \
 		mainwindow.o \
+		BlockchainDraw.o \
 		moc_Block.o \
 		moc_Node.o \
 		moc_User.o \
-		moc_mainwindow.o
+		moc_mainwindow.o \
+		moc_BlockchainDraw.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -162,7 +166,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		Include/User.hpp \
 		Include/Rsa.h \
 		Include/GenesisBlock.hpp \
-		Include/mainwindow.h Main.cpp \
+		Include/mainwindow.h \
+		Include/BlockchainDraw.hpp Main.cpp \
 		Node.cpp \
 		Simulation.cpp \
 		StakePool.cpp \
@@ -171,7 +176,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		Rsa.cpp \
 		Transaction.cpp \
 		GenesisBlock.cpp \
-		mainwindow.cpp
+		mainwindow.cpp \
+		BlockchainDraw.cpp
 QMAKE_TARGET  = TER-Card
 DESTDIR       = 
 TARGET        = TER-Card
@@ -351,8 +357,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents Include/Block.hpp Include/Node.hpp Include/Simulation.hpp Include/StakePool.hpp Include/Transaction.hpp Include/User.hpp Include/Rsa.h Include/GenesisBlock.hpp Include/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents Main.cpp Node.cpp Simulation.cpp StakePool.cpp User.cpp Block.cpp Rsa.cpp Transaction.cpp GenesisBlock.cpp mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents Include/Block.hpp Include/Node.hpp Include/Simulation.hpp Include/StakePool.hpp Include/Transaction.hpp Include/User.hpp Include/Rsa.h Include/GenesisBlock.hpp Include/mainwindow.h Include/BlockchainDraw.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents Main.cpp Node.cpp Simulation.cpp StakePool.cpp User.cpp Block.cpp Rsa.cpp Transaction.cpp GenesisBlock.cpp mainwindow.cpp BlockchainDraw.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui $(DISTDIR)/
 
 
@@ -385,9 +391,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_Block.cpp moc_Node.cpp moc_User.cpp moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_Block.cpp moc_Node.cpp moc_User.cpp moc_mainwindow.cpp moc_BlockchainDraw.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_Block.cpp moc_Node.cpp moc_User.cpp moc_mainwindow.cpp
+	-$(DEL_FILE) moc_Block.cpp moc_Node.cpp moc_User.cpp moc_mainwindow.cpp moc_BlockchainDraw.cpp
 moc_Block.cpp: Include/Block.hpp \
 		Include/Transaction.hpp \
 		moc_predefs.h \
@@ -397,6 +403,7 @@ moc_Block.cpp: Include/Block.hpp \
 moc_Node.cpp: Include/Node.hpp \
 		Include/Block.hpp \
 		Include/Transaction.hpp \
+		Include/BlockchainDraw.hpp \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/nicolas/FAC/M1/Ter/TER-Card/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/nicolas/FAC/M1/Ter/TER-Card -I/home/nicolas/FAC/M1/Ter/TER-Card -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Include/Node.hpp -o moc_Node.cpp
@@ -405,6 +412,7 @@ moc_User.cpp: Include/User.hpp \
 		Include/Node.hpp \
 		Include/Block.hpp \
 		Include/Transaction.hpp \
+		Include/BlockchainDraw.hpp \
 		Include/Rsa.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
@@ -413,9 +421,21 @@ moc_User.cpp: Include/User.hpp \
 moc_mainwindow.cpp: Include/mainwindow.h \
 		Include/Block.hpp \
 		Include/Transaction.hpp \
+		Include/GenesisBlock.hpp \
+		Include/User.hpp \
+		Include/Node.hpp \
+		Include/BlockchainDraw.hpp \
+		Include/Rsa.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/nicolas/FAC/M1/Ter/TER-Card/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/nicolas/FAC/M1/Ter/TER-Card -I/home/nicolas/FAC/M1/Ter/TER-Card -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Include/mainwindow.h -o moc_mainwindow.cpp
+
+moc_BlockchainDraw.cpp: Include/BlockchainDraw.hpp \
+		Include/Block.hpp \
+		Include/Transaction.hpp \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/nicolas/FAC/M1/Ter/TER-Card/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/nicolas/FAC/M1/Ter/TER-Card -I/home/nicolas/FAC/M1/Ter/TER-Card -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Include/BlockchainDraw.hpp -o moc_BlockchainDraw.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -441,16 +461,19 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 Main.o: Main.cpp Include/mainwindow.h \
 		Include/Block.hpp \
 		Include/Transaction.hpp \
-		Include/Node.hpp \
-		Include/User.hpp \
-		Include/Rsa.h \
 		Include/GenesisBlock.hpp \
-		Include/Simulation.hpp
+		Include/User.hpp \
+		Include/Node.hpp \
+		Include/BlockchainDraw.hpp \
+		Include/Rsa.h \
+		Include/Simulation.hpp \
+		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Main.o Main.cpp
 
 Node.o: Node.cpp Include/Node.hpp \
 		Include/Block.hpp \
 		Include/Transaction.hpp \
+		Include/BlockchainDraw.hpp \
 		Include/StakePool.hpp \
 		Include/User.hpp \
 		Include/Rsa.h \
@@ -462,6 +485,7 @@ Simulation.o: Simulation.cpp Include/Simulation.hpp \
 		Include/Node.hpp \
 		Include/Block.hpp \
 		Include/Transaction.hpp \
+		Include/BlockchainDraw.hpp \
 		Include/Rsa.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Simulation.o Simulation.cpp
 
@@ -470,6 +494,7 @@ StakePool.o: StakePool.cpp Include/StakePool.hpp \
 		Include/Node.hpp \
 		Include/Block.hpp \
 		Include/Transaction.hpp \
+		Include/BlockchainDraw.hpp \
 		Include/Rsa.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o StakePool.o StakePool.cpp
 
@@ -477,6 +502,7 @@ User.o: User.cpp Include/User.hpp \
 		Include/Node.hpp \
 		Include/Block.hpp \
 		Include/Transaction.hpp \
+		Include/BlockchainDraw.hpp \
 		Include/Rsa.h \
 		Include/GenesisBlock.hpp \
 		Include/StakePool.hpp
@@ -493,6 +519,7 @@ Transaction.o: Transaction.cpp Include/Transaction.hpp \
 		Include/User.hpp \
 		Include/Node.hpp \
 		Include/Block.hpp \
+		Include/BlockchainDraw.hpp \
 		Include/Rsa.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Transaction.o Transaction.cpp
 
@@ -501,14 +528,26 @@ GenesisBlock.o: GenesisBlock.cpp Include/GenesisBlock.hpp \
 		Include/Transaction.hpp \
 		Include/User.hpp \
 		Include/Node.hpp \
+		Include/BlockchainDraw.hpp \
 		Include/Rsa.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o GenesisBlock.o GenesisBlock.cpp
 
 mainwindow.o: mainwindow.cpp Include/mainwindow.h \
 		Include/Block.hpp \
 		Include/Transaction.hpp \
-		ui_mainwindow.h
+		Include/GenesisBlock.hpp \
+		Include/User.hpp \
+		Include/Node.hpp \
+		Include/BlockchainDraw.hpp \
+		Include/Rsa.h \
+		ui_mainwindow.h \
+		Include/Simulation.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
+
+BlockchainDraw.o: BlockchainDraw.cpp Include/BlockchainDraw.hpp \
+		Include/Block.hpp \
+		Include/Transaction.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o BlockchainDraw.o BlockchainDraw.cpp
 
 moc_Block.o: moc_Block.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Block.o moc_Block.cpp
@@ -521,6 +560,9 @@ moc_User.o: moc_User.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_BlockchainDraw.o: moc_BlockchainDraw.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_BlockchainDraw.o moc_BlockchainDraw.cpp
 
 ####### Install
 

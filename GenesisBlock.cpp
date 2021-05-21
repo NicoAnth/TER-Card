@@ -29,7 +29,6 @@ void GenesisBlock::addPublicKey(std::pair<long,long> pK){
 
 void GenesisBlock::paintEvent(QPaintEvent *){
     QPainter p(this);
-    QPen pen;
     p.setBrush(Qt::blue);
     p.drawRect(QRect(positionx,positiony,100,100));
 }

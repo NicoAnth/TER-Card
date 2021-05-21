@@ -32,7 +32,6 @@ public:
     QGridLayout *gridLayout_2;
     QVBoxLayout *v1;
     QHBoxLayout *h1;
-    QWidget *blockW;
     QHBoxLayout *h2;
     QHBoxLayout *h3;
     QPushButton *create_userPB;
@@ -58,20 +57,7 @@ public:
         v1->setObjectName(QString::fromUtf8("v1"));
         h1 = new QHBoxLayout();
         h1->setObjectName(QString::fromUtf8("h1"));
-        blockW = new QWidget(widget);
-        blockW->setObjectName(QString::fromUtf8("blockW"));
-        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(blockW->sizePolicy().hasHeightForWidth());
-        blockW->setSizePolicy(sizePolicy);
-        blockW->setMinimumSize(QSize(0, 0));
-        blockW->setSizeIncrement(QSize(0, 0));
-        blockW->setBaseSize(QSize(2500, 0));
-        blockW->setMouseTracking(false);
-
-        h1->addWidget(blockW);
-
+        h1->setSizeConstraint(QLayout::SetDefaultConstraint);
 
         v1->addLayout(h1);
 

@@ -28,10 +28,11 @@ HEADERS += Include/Block.hpp \
            Include/User.hpp \
            Include/Rsa.h \
            Include/GenesisBlock.hpp \
-            Include/mainwindow.h 
+            Include/mainwindow.h \
+            Include/BlockchainDraw.hpp
 
 SOURCES += Main.cpp Node.cpp Simulation.cpp StakePool.cpp User.cpp Block.cpp Rsa.cpp Transaction.cpp GenesisBlock.cpp \
-    mainwindow.cpp
+    mainwindow.cpp BlockchainDraw.cpp
 
 FORMS += \
     mainwindow.ui

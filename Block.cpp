@@ -50,9 +50,9 @@ int Block::getPositiony(){
     return positiony;
 }
 
-void Block::paintEvent(QPaintEvent *){
+/* void Block::paintEvent(QPaintEvent *){
     QPainter p(this);
     p.setBrush(Qt::blue);
     p.drawRect(QRect(positionx,positiony,100,100));
     p.drawLine(QLine(lastBlockPosx+100,lastBlockPosy+50,positionx,positiony+50));
-}
+} */

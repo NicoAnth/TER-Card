@@ -1,6 +1,7 @@
 #include "Include/Node.hpp"
 #include "Include/StakePool.hpp"
 #include "Include/GenesisBlock.hpp"
+#include "Include/BlockchainDraw.hpp"
 #include <stdlib.h> 
 #include <time.h>
 #include <QCryptographicHash>
@@ -17,11 +18,11 @@ class requireMinimalStake: public std::exception{
 }rms;
 
 QList <Transaction> ledg;
-QList <Block*> init_blockChain;
-QList <Block*> NodeClass::blockChain = init_blockChain;
+QList <Block*> *init_blockChain;
+QList <Block*>* NodeClass::blockChain = init_blockChain;
 QList <Transaction> NodeClass::ledger = ledg;
 
-NodeClass::NodeClass(User* m_owner,QList<Block*> &m_blockChain,QList <Transaction> m_ledger, int m_stake):owner(m_owner){
+NodeClass::NodeClass(User* m_owner,QList<Block*> *m_blockChain,QList <Transaction> m_ledger, int m_stake):owner(m_owner){
   
   try{
     if(m_stake < MINIMAL_STAKE){
@@ -34,7 +35,7 @@ NodeClass::NodeClass(User* m_owner,QList<Block*> &m_blockChain,QList <Transactio
   }
   blockChain = m_blockChain;
   ledger= m_ledger;
-  GenesisBlock& geBlock = dynamic_cast<GenesisBlock&> (*blockChain.first());
+  GenesisBlock& geBlock = dynamic_cast<GenesisBlock&> (*blockChain->first());
   geBlock.addStaker(this,m_stake);
   stake = m_stake;
   online = true;
@@ -44,7 +45,7 @@ NodeClass::NodeClass(User* m_owner,QList<Block*> &m_blockChain,QList <Transactio
 
 NodeClass* NodeClass::electSlotLeader()
 {
-  GenesisBlock& geBlock = dynamic_cast<GenesisBlock&> (*blockChain.first());
+  GenesisBlock& geBlock = dynamic_cast<GenesisBlock&> (*blockChain->first());
   QListIterator<std::pair<NodeClass*,int>> i(geBlock.getStakers());
   int sum=0;
 
@@ -102,9 +103,9 @@ bool NodeClass::createBlock(){
         blockTransaction.append(*i);
         totalFees += i->getFees();
       }
-        Block* newBlock = new Block((*blockChain.last()).getHash(),signBlock(),computeLastBlockHash(),blockTransaction,
-        (*blockChain.last()).getPositionx(),(*blockChain.last()).getPositiony());
-        blockChain.append(newBlock);
+        Block* newBlock = new Block((*blockChain->last()).getHash(),signBlock(),computeLastBlockHash(),blockTransaction,
+        (*blockChain->last()).getPositionx(),(*blockChain->last()).getPositiony());
+        blockChain->append(newBlock);
         stake += totalFees;
         electSlotLeader();
         return true;

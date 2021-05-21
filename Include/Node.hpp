@@ -4,6 +4,7 @@
 #include <exception>
 #include <QObject>
 #include "Block.hpp"
+#include "BlockchainDraw.hpp"
 
 #define TRANSACTION_MAX 3
 #define MINIMAL_STAKE 10
@@ -18,7 +19,7 @@ private:
   const User* owner;
   const int minimalStake = MINIMAL_STAKE;
   int stake;
-  static QList<Block*> blockChain;
+  static QList<Block*>* blockChain;
   static QList <Transaction> ledger;
   bool online;
   bool isSlotLeader;
@@ -26,7 +27,7 @@ private:
 public:
 
   /* Constructor */
-  NodeClass(User* m_owner,QList<Block*> &m_blockChain,QList <Transaction> m_ledger, int stake);
+  NodeClass(User* m_owner,QList<Block*> *m_blockChain,QList <Transaction> m_ledger, int stake);
 
   /* Slot leader methods */
   NodeClass* electSlotLeader();
@@ -41,7 +42,7 @@ public:
   QByteArray computeLastBlockHash();
 
   /* getter */
-  QList<Block*> &getBlockChain(){
+  QList<Block*> *getBlockChain(){
     return blockChain;
   }
   QList <Transaction> getLedger(){

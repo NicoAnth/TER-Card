@@ -14,14 +14,11 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
     firstNode = new NodeClass(firstUser,*blockchain,*ledger,100);
     firstNode->setSlotLeader(true);
 
-    //setMinimumSize(1900,1000);
-    ui->v1->addWidget(geBlock);
-    ui->v1->addWidget(firstUser);
-    ui->v1->addWidget(firstNode);
-
-    /* geBlock->setParent(this);
-    firstUser->setParent(this);
-    firstNode->setParent(this); */
+    ui->widget->setMinimumSize(1600,900);
+    
+    geBlock->setParent(ui->blockW);
+    ui->h2->addWidget(firstUser);
+    ui->h2->addWidget(firstNode);
 
 }
 Ui::MainWindow* MainWindow::getUi(){

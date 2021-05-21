@@ -18,6 +18,7 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -25,40 +26,76 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
-    QAction *actionR_initialiser;
-    QAction *actionHey;
     QWidget *centralwidget;
     QGridLayout *gridLayout;
-    QPushButton *pushButton;
-    QHBoxLayout *v1;
+    QWidget *widget;
+    QGridLayout *gridLayout_2;
+    QVBoxLayout *v1;
+    QHBoxLayout *h1;
+    QWidget *blockW;
+    QHBoxLayout *h2;
+    QHBoxLayout *h3;
+    QPushButton *create_userPB;
     QMenuBar *menubar;
     QMenu *menuMenu;
-    QMenu *menuR_initialiser;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(1076, 665);
-        actionR_initialiser = new QAction(MainWindow);
-        actionR_initialiser->setObjectName(QString::fromUtf8("actionR_initialiser"));
-        actionR_initialiser->setCheckable(false);
-        actionHey = new QAction(MainWindow);
-        actionHey->setObjectName(QString::fromUtf8("actionHey"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         centralwidget->setEnabled(true);
+        centralwidget->setCursor(QCursor(Qt::ArrowCursor));
         gridLayout = new QGridLayout(centralwidget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        pushButton = new QPushButton(centralwidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-
-        gridLayout->addWidget(pushButton, 1, 0, 1, 1);
-
-        v1 = new QHBoxLayout();
+        widget = new QWidget(centralwidget);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        gridLayout_2 = new QGridLayout(widget);
+        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        v1 = new QVBoxLayout();
         v1->setObjectName(QString::fromUtf8("v1"));
+        h1 = new QHBoxLayout();
+        h1->setObjectName(QString::fromUtf8("h1"));
+        blockW = new QWidget(widget);
+        blockW->setObjectName(QString::fromUtf8("blockW"));
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(blockW->sizePolicy().hasHeightForWidth());
+        blockW->setSizePolicy(sizePolicy);
+        blockW->setMinimumSize(QSize(0, 0));
+        blockW->setSizeIncrement(QSize(0, 0));
+        blockW->setBaseSize(QSize(2500, 0));
+        blockW->setMouseTracking(false);
 
-        gridLayout->addLayout(v1, 0, 0, 1, 1);
+        h1->addWidget(blockW);
+
+
+        v1->addLayout(h1);
+
+        h2 = new QHBoxLayout();
+        h2->setObjectName(QString::fromUtf8("h2"));
+
+        v1->addLayout(h2);
+
+        h3 = new QHBoxLayout();
+        h3->setObjectName(QString::fromUtf8("h3"));
+        create_userPB = new QPushButton(widget);
+        create_userPB->setObjectName(QString::fromUtf8("create_userPB"));
+        create_userPB->setMaximumSize(QSize(200, 25));
+
+        h3->addWidget(create_userPB);
+
+
+        v1->addLayout(h3);
+
+
+        gridLayout_2->addLayout(v1, 0, 1, 1, 1);
+
+
+        gridLayout->addWidget(widget, 1, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -66,13 +103,10 @@ public:
         menubar->setGeometry(QRect(0, 0, 1076, 23));
         menuMenu = new QMenu(menubar);
         menuMenu->setObjectName(QString::fromUtf8("menuMenu"));
-        menuR_initialiser = new QMenu(menuMenu);
-        menuR_initialiser->setObjectName(QString::fromUtf8("menuR_initialiser"));
         MainWindow->setMenuBar(menubar);
 
         menubar->addAction(menuMenu->menuAction());
-        menuMenu->addAction(menuR_initialiser->menuAction());
-        menuR_initialiser->addSeparator();
+        menuMenu->addSeparator();
 
         retranslateUi(MainWindow);
 
@@ -82,11 +116,8 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
-        actionR_initialiser->setText(QApplication::translate("MainWindow", "R\303\251initialiser", nullptr));
-        actionHey->setText(QApplication::translate("MainWindow", "Hey", nullptr));
-        pushButton->setText(QApplication::translate("MainWindow", "Cr\303\251er utilisateur", nullptr));
+        create_userPB->setText(QApplication::translate("MainWindow", "Cr\303\251er utilisateur", nullptr));
         menuMenu->setTitle(QApplication::translate("MainWindow", "Menu", nullptr));
-        menuR_initialiser->setTitle(QApplication::translate("MainWindow", "R\303\251initialiser", nullptr));
     } // retranslateUi
 
 };

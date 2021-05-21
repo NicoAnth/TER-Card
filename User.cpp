@@ -25,6 +25,7 @@ User::User(GenesisBlock& geblock)
   createKeys(publicKey,privateKey);
   geblock.addPublicKey(publicKey);
   connectedNode = NULL;
+  setCursor(Qt::PointingHandCursor);
   count++;
 };
 
@@ -98,5 +99,5 @@ long long hashtoll(std::string hash){
 void User::paintEvent(QPaintEvent *){
     QPainter painter(this);
     painter.setBrush(Qt::red);
-    painter.drawRect(QRect(200,400,100,100));
+    painter.drawRect(QRect(0,0,50,50));
 }

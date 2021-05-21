@@ -22,9 +22,18 @@ int main (int argc, char **argv )
   window->firstNode->receiveTransactionRequest(window->firstUser->createTransaction(&blop,10));
   window->firstNode->receiveTransactionRequest(window->firstUser->createTransaction(&blop,15));
   window->firstNode->receiveTransactionRequest(window->firstUser->createTransaction(&blop,5));
+  
   window->firstNode->createBlock();
-  window->getUi()->v1->addWidget(window->firstNode->getBlockChain().last());
-  //window->firstNode->getBlockChain().last()->setParent()
+  window->firstNode->getBlockChain().last()->setParent(window->getUi()->blockW);
+  window->firstNode->createBlock();
+  window->firstNode->getBlockChain().last()->setParent(window->getUi()->blockW);
+  window->firstNode->createBlock();
+  window->firstNode->getBlockChain().last()->setParent(window->getUi()->blockW);
+  window->firstNode->createBlock();
+  window->firstNode->getBlockChain().last()->setParent(window->getUi()->blockW);
+  window->firstNode->createBlock();
+  window->firstNode->getBlockChain().last()->setParent(window->getUi()->blockW);
+  window->getUi()->h2->addWidget(&blop);
   window->show();
 
  /*  //Init

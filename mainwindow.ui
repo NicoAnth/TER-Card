@@ -17,16 +17,74 @@
    <property name="enabled">
     <bool>true</bool>
    </property>
+   <property name="cursor">
+    <cursorShape>ArrowCursor</cursorShape>
+   </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="1" column="0">
-     <widget class="QPushButton" name="pushButton">
-      <property name="text">
-       <string>Créer utilisateur</string>
-      </property>
+     <widget class="QWidget" name="widget" native="true">
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="1">
+        <layout class="QVBoxLayout" name="v1">
+         <item>
+          <layout class="QHBoxLayout" name="h1">
+           <item>
+            <widget class="QWidget" name="blockW" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="sizeIncrement">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="baseSize">
+              <size>
+               <width>2500</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="mouseTracking">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="h2"/>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="h3">
+           <item>
+            <widget class="QPushButton" name="create_userPB">
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Créer utilisateur</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
      </widget>
-    </item>
-    <item row="0" column="0">
-     <layout class="QHBoxLayout" name="v1"/>
     </item>
    </layout>
   </widget>
@@ -43,29 +101,10 @@
     <property name="title">
      <string>Menu</string>
     </property>
-    <widget class="QMenu" name="menuR_initialiser">
-     <property name="title">
-      <string>Réinitialiser</string>
-     </property>
-     <addaction name="separator"/>
-    </widget>
-    <addaction name="menuR_initialiser"/>
+    <addaction name="separator"/>
    </widget>
    <addaction name="menuMenu"/>
   </widget>
-  <action name="actionR_initialiser">
-   <property name="checkable">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Réinitialiser</string>
-   </property>
-  </action>
-  <action name="actionHey">
-   <property name="text">
-    <string>Hey</string>
-   </property>
-  </action>
  </widget>
  <resources/>
  <connections/>

@@ -10,12 +10,11 @@ int Block::count = 0;
 
 Block::Block():signature(0){};
 
-Block::Block(QByteArray hashPrev, long long slotLeaderSignature, QByteArray m_Hash,QList<Transaction> m_transactionList,int lastPosx, int lastPosy,QWidget *parent): signature(slotLeaderSignature),hash_prev(hashPrev), transactionList(m_transactionList),id(count),hash_cur(m_Hash),lastBlockPosx(lastPosx),lastBlockPosy(lastPosy){
+Block::Block(QByteArray hashPrev, long long slotLeaderSignature, QByteArray m_Hash,QList<Transaction> m_transactionList,int lastPosx, int lastPosy): signature(slotLeaderSignature),hash_prev(hashPrev), transactionList(m_transactionList),id(count),hash_cur(m_Hash),lastBlockPosx(lastPosx),lastBlockPosy(lastPosy){
 
     positionx = lastBlockPosx + 150;
     positiony = lastBlockPosy;
-    this->setParent(parent);
-    setMinimumSize(100,100);
+    setCursor(Qt::PointingHandCursor);
     count += 1;
 
 }
@@ -53,7 +52,6 @@ int Block::getPositiony(){
 
 void Block::paintEvent(QPaintEvent *){
     QPainter p(this);
-    QPen pen;
     p.setBrush(Qt::blue);
     p.drawRect(QRect(positionx,positiony,100,100));
     p.drawLine(QLine(lastBlockPosx+100,lastBlockPosy+50,positionx,positiony+50));

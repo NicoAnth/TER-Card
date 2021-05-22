@@ -99,5 +99,6 @@ long long hashtoll(std::string hash){
 void User::paintEvent(QPaintEvent *){
     QPainter painter(this);
     painter.setBrush(Qt::red);
-    painter.drawRect(QRect(0,0,50,50));
+    painter.drawRect(QRect(0,0,30,30));
+    painter.drawText(QRect(10,10,30,30),"U");
 }

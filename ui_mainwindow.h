@@ -18,6 +18,7 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -34,7 +35,9 @@ public:
     QHBoxLayout *h1;
     QHBoxLayout *h2;
     QHBoxLayout *h3;
-    QPushButton *create_userPB;
+    QSpacerItem *horizontalSpacer;
+    QPushButton *pushButton;
+    QSpacerItem *horizontalSpacer_2;
     QMenuBar *menubar;
     QMenu *menuMenu;
 
@@ -68,11 +71,18 @@ public:
 
         h3 = new QHBoxLayout();
         h3->setObjectName(QString::fromUtf8("h3"));
-        create_userPB = new QPushButton(widget);
-        create_userPB->setObjectName(QString::fromUtf8("create_userPB"));
-        create_userPB->setMaximumSize(QSize(200, 25));
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        h3->addWidget(create_userPB);
+        h3->addItem(horizontalSpacer);
+
+        pushButton = new QPushButton(widget);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+
+        h3->addWidget(pushButton);
+
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        h3->addItem(horizontalSpacer_2);
 
 
         v1->addLayout(h3);
@@ -102,7 +112,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
-        create_userPB->setText(QApplication::translate("MainWindow", "Cr\303\251er utilisateur", nullptr));
+        pushButton->setText(QApplication::translate("MainWindow", "Cr\303\251er utilisateur", nullptr));
         menuMenu->setTitle(QApplication::translate("MainWindow", "Menu", nullptr));
     } // retranslateUi
 

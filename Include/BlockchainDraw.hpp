@@ -2,7 +2,9 @@
 #define BLOCKCHAINDRAW_H
 #include <QList>
 #include <QWidget>
+#include <QGraphicsWidget>
 #include "Block.hpp"
+
 class BlockchainDraw: public QWidget {
 
 Q_OBJECT 

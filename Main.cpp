@@ -19,10 +19,16 @@ int main (int argc, char **argv )
 
   MainWindow* window = new MainWindow();
   User blop(*(window->geBlock));
-  window->firstNode->receiveTransactionRequest(window->firstUser->createTransaction(&blop,10));
-  window->firstNode->receiveTransactionRequest(window->firstUser->createTransaction(&blop,15));
-  window->firstNode->receiveTransactionRequest(window->firstUser->createTransaction(&blop,5));
+  window->firstNode->receiveTransactionRequest(window->firstUser->createTransaction(&blop,1));
+  window->firstNode->receiveTransactionRequest(window->firstUser->createTransaction(&blop,2));
+  window->firstNode->receiveTransactionRequest(window->firstUser->createTransaction(&blop,3));
   
+  window->firstNode->createBlock();
+  window->firstNode->getBlockChain()->last()->setParent(window->blockchainDraw);
+  window->firstNode->createBlock();
+  window->firstNode->getBlockChain()->last()->setParent(window->blockchainDraw);
+  window->firstNode->createBlock();
+  window->firstNode->getBlockChain()->last()->setParent(window->blockchainDraw);
   window->firstNode->createBlock();
   window->firstNode->getBlockChain()->last()->setParent(window->blockchainDraw);
   window->firstNode->createBlock();

@@ -13,10 +13,9 @@ void BlockchainDraw::paintEvent(QPaintEvent *){
     int positiony =0;
     p.drawRect(QRect(positionx,positiony,100,100));
     for(int i=0;i<m_blockChain->count()-1;i++){
-
+        positionx += 150;
         p.drawRect(QRect(positionx,positiony,100,100));
         p.drawLine(QLine(positionx-50,positiony+50,positionx,positiony+50));
-        positionx += 150;
     }
 }
 void BlockchainDraw::appendBlockchain(Block* blockToAppend){

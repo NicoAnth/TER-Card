@@ -25,6 +25,6 @@ class GenesisBlock : public Block {
         void addPublicKey(std::pair<long,long>);
         void updateStaker(NodeClass node, int stake, int prec_value);
 
-        void paintEvent(QPaintEvent *);
+        //void paintEvent(QPaintEvent *);
 };
 #endif

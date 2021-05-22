@@ -15,7 +15,7 @@ Block::Block(QByteArray hashPrev, long long slotLeaderSignature, QByteArray m_Ha
     positionx = lastBlockPosx + 150;
     positiony = lastBlockPosy;
     setCursor(Qt::PointingHandCursor);
-    setBaseSize(100,100);
+    setGeometry(positionx,0,100,100);
     count += 1;
 
 }

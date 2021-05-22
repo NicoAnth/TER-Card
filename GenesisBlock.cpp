@@ -3,12 +3,15 @@
 #include <QCryptographicHash>
 #include <QString>
 #include <QPainter>
+#include <QSize>
 
 GenesisBlock::GenesisBlock(){
     QString hash_0("42");
     hash_cur = QCryptographicHash::hash(hash_0.toLocal8Bit(),QCryptographicHash::Sha256);
     positionx = 0;
     positiony = 100;
+    setCursor(Qt::PointingHandCursor);
+    setGeometry(positionx,0,100,100);
     count += 1;
 }
 
@@ -27,11 +30,12 @@ void GenesisBlock::addPublicKey(std::pair<long,long> pK){
     publicKey.append(pK);
 }
 
-void GenesisBlock::paintEvent(QPaintEvent *){
+/* void GenesisBlock::paintEvent(QPaintEvent *){
     QPainter p(this);
     p.setBrush(Qt::blue);
     p.drawRect(QRect(positionx,positiony,100,100));
-}
+    p.drawText(QRect(positionx,positiony,100,100),"G");
+} */
 /* void GenesisBlock::updateStaker(NodeClass node, int stake,int prec_value ){
     stakers.replace(stakers.indexOf(std::make_pair(node,prec_value)),std::make_pair(node,prec_value));
 } */    

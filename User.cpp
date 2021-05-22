@@ -26,6 +26,7 @@ User::User(GenesisBlock& geblock)
   geblock.addPublicKey(publicKey);
   connectedNode = NULL;
   setCursor(Qt::PointingHandCursor);
+  setMaximumSize(30,30);
   count++;
 };
 

@@ -8,10 +8,16 @@ BlockchainDraw::BlockchainDraw(QList<Block*> *blockchain):m_blockChain(blockchai
 void BlockchainDraw::paintEvent(QPaintEvent *){
 
     QPainter p(this);
+    QPen whitePen, blackPen;
+    whitePen.setColor(Qt::white);
+    blackPen.setColor(Qt::black);
+    p.setPen(whitePen);
     p.setBrush(Qt::blue);
     int positionx =0;
     int positiony =0;
     p.drawRect(QRect(positionx,positiony,100,100));
+    p.drawText(QRect(40,40,100,100),"G");
+    p.setPen(blackPen);
     for(int i=0;i<m_blockChain->count()-1;i++){
         positionx += 150;
         p.drawRect(QRect(positionx,positiony,100,100));

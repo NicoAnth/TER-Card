@@ -1,6 +1,7 @@
 #include "Include/mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Include/Simulation.hpp"
+#include <QSpacerItem>
 
 MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWindow){
 
@@ -27,4 +28,16 @@ Ui::MainWindow* MainWindow::getUi(){
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+User* MainWindow::createUser(){
+
+    User* newUser = new User(*geBlock);
+    ui->h2->addWidget(newUser);
+    return newUser;
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    createUser();
 }

@@ -23,6 +23,12 @@
    <layout class="QGridLayout" name="gridLayout">
     <item row="1" column="0">
      <widget class="QWidget" name="widget" native="true">
+      <property name="layoutDirection">
+       <enum>Qt::RightToLeft</enum>
+      </property>
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="1">
         <layout class="QVBoxLayout" name="v1">
@@ -34,7 +40,11 @@
           </layout>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="h2"/>
+          <layout class="QHBoxLayout" name="h2" stretch="">
+           <property name="bottomMargin">
+            <number>200</number>
+           </property>
+          </layout>
          </item>
          <item>
           <layout class="QHBoxLayout" name="h3">

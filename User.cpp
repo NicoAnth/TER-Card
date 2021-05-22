@@ -2,6 +2,7 @@
 #include "Include/Transaction.hpp"
 #include "Include/GenesisBlock.hpp"
 #include "Include/StakePool.hpp"
+#include "Include/Simulation.hpp"
 #include <bits/stdc++.h>
 #include <QByteArray>
 #include <qdebug.h>
@@ -25,6 +26,7 @@ User::User(GenesisBlock& geblock)
   createKeys(publicKey,privateKey);
   geblock.addPublicKey(publicKey);
   connectedNode = NULL;
+  giveMoney(*this,1000);
   setCursor(Qt::PointingHandCursor);
   setMaximumSize(30,30);
   count++;

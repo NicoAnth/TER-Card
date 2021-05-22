@@ -31,6 +31,11 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    
+public slots:
+    User* createUser();
+private slots:
+    void on_pushButton_clicked();
 };
 
 #endif // MAINWINDOW_H

@@ -54,6 +54,8 @@ public:
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         widget = new QWidget(centralwidget);
         widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setLayoutDirection(Qt::RightToLeft);
+        widget->setAutoFillBackground(true);
         gridLayout_2 = new QGridLayout(widget);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         v1 = new QVBoxLayout();
@@ -66,6 +68,7 @@ public:
 
         h2 = new QHBoxLayout();
         h2->setObjectName(QString::fromUtf8("h2"));
+        h2->setContentsMargins(-1, -1, -1, 200);
 
         v1->addLayout(h2);
 

@@ -34,7 +34,6 @@ public:
 
   /* Slot leader methods */
   NodeClass* electSlotLeader();
-  bool createBlock();
   bool slotLeaderVerification();
   long long signBlock();  
 
@@ -59,6 +58,10 @@ public:
 
   void paintEvent(QPaintEvent *);
   QString getInfos();
+
+  public slots:
+    void ShowContextMenu(const QPoint &pos);
+    bool createBlock();
 };
 
 #endif

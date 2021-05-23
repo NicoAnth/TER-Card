@@ -8,6 +8,10 @@
 #include <QCryptographicHash>
 #include <qdebug.h>
 #include <QPainter>
+#include <QMenu>
+#include <QPushButton>
+#include <QFormLayout>
+#include <QSpinBox>
 
 using namespace std;
 
@@ -38,13 +42,18 @@ NodeClass::NodeClass(User* m_owner,QList<Block*> *m_blockChain,QList <Transactio
   blockChain = m_blockChain;
   ledger= m_ledger;
   GenesisBlock& geBlock = dynamic_cast<GenesisBlock&> (*blockChain->first());
-  setCursor(Qt::PointingHandCursor);
-  setMaximumSize(30,30);
   geBlock.addStaker(this,m_stake);
   stake = m_stake;
   online = true;
   isSlotLeader = false;
-  setToolTip(getInfos());
+  setCursor(Qt::PointingHandCursor);
+  setContextMenuPolicy(Qt::CustomContextMenu);
+  setMouseTracking(true);
+  setMaximumSize(30,30);
+  setToolTip(getInfos()); 
+  
+  connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), 
+        this, SLOT(ShowContextMenu(const QPoint &)));
   
 }
 
@@ -73,6 +82,7 @@ NodeClass* NodeClass::electSlotLeader()
       next.first->isSlotLeader = true;
       //Tool tip settings
       next.first->setToolTip(next.first->getInfos());
+      next.first->repaint();
       setToolTip(getInfos());
       return next.first;
     }
@@ -116,6 +126,7 @@ bool NodeClass::createBlock(){
         blockChain->append(newBlock);
         stake += totalFees;
         electSlotLeader();
+        update();
         return true;
     }
     else{
@@ -200,4 +211,18 @@ void NodeClass::paintEvent(QPaintEvent *){
   painter.drawRect(QRect(0,0,30,30));
   painter.setPen(pen);
   painter.drawText(QRect(10,8,30,30),"N");
+}
+
+void NodeClass::ShowContextMenu(const QPoint &pos){
+
+  QMenu contextMenu(tr("Context menu"), this);
+  if(isSlotLeader){
+  QAction action1("Créer un bloc", this);
+  connect(&action1, SIGNAL(triggered()), this, SLOT(createBlock()));
+  contextMenu.addAction(&action1);
+
+  contextMenu.exec(mapToGlobal(pos));
+  }
+
+
 }

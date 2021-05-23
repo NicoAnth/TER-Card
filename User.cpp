@@ -40,8 +40,7 @@ User::User(GenesisBlock& geblock,QMainWindow* mw, int graphicLine):m_mw(mw),m_gr
   setMaximumSize(30,30);
   count++;
 
-  connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), 
-        this, SLOT(ShowContextMenu(const QPoint &)));
+  connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(ShowContextMenu(const QPoint &)));
 };
 
 User::~User(){}
@@ -81,6 +80,9 @@ NodeClass* User::createNode(int stake){
   try{
     if(stake<useableStakes || *it == NULL){
       throw reus; 
+    }
+    if(connectedNode != NULL){
+      throw reus;
     }
   }
   catch(exception &e){

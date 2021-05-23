@@ -3,6 +3,7 @@
 #include <QList>
 #include <exception>
 #include <QObject>
+#include <QMainWindow>
 #include "Block.hpp"
 #include "BlockchainDraw.hpp"
 
@@ -24,10 +25,12 @@ private:
   bool online;
   bool isSlotLeader;
 
+  QMainWindow* m_mw;
+
 public:
 
   /* Constructor */
-  NodeClass(User* m_owner,QList<Block*> *m_blockChain,QList <Transaction> m_ledger, int stake);
+  NodeClass(User* m_owner,QList<Block*> *m_blockChain,QList <Transaction> m_ledger, int stake,QMainWindow* mw);
 
   /* Slot leader methods */
   NodeClass* electSlotLeader();
@@ -47,6 +50,9 @@ public:
   }
   QList <Transaction> getLedger(){
     return ledger;
+  }
+  bool isOnline(){
+    return online;
   }
   /* setter */
   void setSlotLeader(bool sl){isSlotLeader = sl;}

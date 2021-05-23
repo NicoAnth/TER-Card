@@ -2,6 +2,7 @@
 #include "Include/StakePool.hpp"
 #include "Include/GenesisBlock.hpp"
 #include "Include/BlockchainDraw.hpp"
+#include "Include/mainwindow.h"
 #include <stdlib.h> 
 #include <time.h>
 #include <QCryptographicHash>
@@ -23,7 +24,7 @@ QList <Block*> *init_blockChain;
 QList <Block*>* NodeClass::blockChain = init_blockChain;
 QList <Transaction> NodeClass::ledger = ledg;
 
-NodeClass::NodeClass(User* m_owner,QList<Block*> *m_blockChain,QList <Transaction> m_ledger, int m_stake):owner(m_owner){
+NodeClass::NodeClass(User* m_owner,QList<Block*> *m_blockChain,QList <Transaction> m_ledger, int m_stake,QMainWindow* mw):owner(m_owner),m_mw(mw){
   
   try{
     if(m_stake < MINIMAL_STAKE){

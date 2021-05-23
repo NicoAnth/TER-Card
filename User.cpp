@@ -7,17 +7,22 @@
 #include <QByteArray>
 #include <qdebug.h>
 #include <QPainter>
+#include <QMenu>
+#include <QPushButton>
+#include <QFormLayout>
+#include <QSpinBox>
 
 class requireEnoughUseableStake: public std::exception{
   virtual const char* what() const throw()
   {
-    return "The user doesn't have enough useable stake to perform this operation";
+    return "The user doesn't have enough useable stake to perform this operation or couldn't find any online node";
   }
 }reus;
 
 int User::count = 0;
+QList<NodeClass*>* User::existingNodes = new QList<NodeClass*>;
 
-User::User(GenesisBlock& geblock)
+User::User(GenesisBlock& geblock,QMainWindow* mw, int graphicLine):m_mw(mw),m_graphicLine(graphicLine)
 {
   id = count;
   totalStakes = 0;
@@ -28,11 +33,15 @@ User::User(GenesisBlock& geblock)
   connectedNode = NULL;
   connectedPool = NULL;
   giveMoney(*this,1000);
+  setContextMenuPolicy(Qt::CustomContextMenu);
   setMouseTracking(true);
   setToolTip(getInfos());
   setCursor(Qt::PointingHandCursor);
   setMaximumSize(30,30);
   count++;
+
+  connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), 
+        this, SLOT(ShowContextMenu(const QPoint &)));
 };
 
 User::~User(){}
@@ -63,18 +72,25 @@ Transaction User::createTransaction(User* m_receiver, int m_amount){
   return t;
 }
 
-NodeClass* User::createNode(NodeClass onlineNode, int stake){
+NodeClass* User::createNode(int stake){
   
+  QList<NodeClass*>::iterator it;
+  for(it = existingNodes->begin(); (*it)->isOnline() != true;++it){}
+  NodeClass* onlineNode = *it;
+
   try{
-    if(stake<useableStakes){
+    if(stake<useableStakes || *it == NULL){
       throw reus; 
     }
   }
   catch(exception &e){
     cout << e.what() << '\n';
   }
-  NodeClass* node = new NodeClass(this,onlineNode.getBlockChain(),onlineNode.getLedger(),stake);
+  NodeClass* node = new NodeClass(this,onlineNode->getBlockChain(),onlineNode->getLedger(),stake,m_mw);
+  useableStakes-= stake;
   connectedNode = node;
+  existingNodes->append(node);
+  ((MainWindow*)m_mw)->addNode(node,this);
   setToolTip(getInfos());
   return node;
 }
@@ -139,4 +155,36 @@ void User::paintEvent(QPaintEvent *){
     painter.setBrush(QColor(0,204,102));
     painter.drawRect(QRect(0,0,30,30));
     painter.drawText(QRect(10,10,30,30),"U");
+}
+
+void User::ShowContextMenu(const QPoint &pos){
+  QMenu contextMenu(tr("Context menu"), this);
+  QAction action1("Créer un noeud", this);
+  connect(&action1, SIGNAL(triggered()), this, SLOT(createNodeSettings()));
+  contextMenu.addAction(&action1);
+
+  contextMenu.exec(mapToGlobal(pos));
+}
+
+void User::createNodeSettings(){
+  QWidget* settingWindow = new QWidget();
+  QFormLayout* mainLayout = new QFormLayout();
+  QPushButton* validate = new QPushButton("Validate");
+  QPushButton* exit = new QPushButton("Annuler");
+  settingWindow->setFixedSize(250,110);
+  settingWindow->setWindowTitle("Nouveau noeud");
+  settingWindow->move(m_mw->pos().x()+m_mw->width()/2-150,m_mw->pos().y()+m_mw->height()/2-50);
+
+  QSpinBox* qsb = new QSpinBox();
+  qsb->setMinimum(10);
+  qsb->setMaximum(useableStakes);
+  mainLayout->addRow(tr("&Stake de départ:"), qsb);
+  mainLayout->addWidget(validate);
+  mainLayout->addWidget(exit);
+  settingWindow->setLayout(mainLayout);
+  settingWindow->show();
+  
+  connect(validate,&QPushButton::clicked,[=](){createNode(qsb->value());});
+  connect(validate,&QPushButton::clicked,settingWindow,&QWidget::close);
+  connect(exit,&QPushButton::clicked,settingWindow,&QWidget::close);  
 }

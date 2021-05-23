@@ -29,7 +29,7 @@ public:
     NodeClass *firstNode;
     BlockchainDraw *blockchainDraw;
     Ui::MainWindow* getUi();
-
+    void addNode(NodeClass* node, User* user);
 private:
     Ui::MainWindow *ui;
     

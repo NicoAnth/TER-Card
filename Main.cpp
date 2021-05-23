@@ -18,7 +18,7 @@ int main (int argc, char **argv )
   QApplication app(argc, argv);
 
   MainWindow* window = new MainWindow();
-  User blop(*(window->geBlock));
+  User blop(*(window->geBlock),window,window->userLine);
   window->firstNode->receiveTransactionRequest(window->firstUser->createTransaction(&blop,1));
   window->firstNode->receiveTransactionRequest(window->firstUser->createTransaction(&blop,2));
   window->firstNode->receiveTransactionRequest(window->firstUser->createTransaction(&blop,3));

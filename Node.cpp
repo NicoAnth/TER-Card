@@ -51,7 +51,7 @@ NodeClass::NodeClass(User* m_owner,QList<Block*> *m_blockChain,QList <Transactio
   setMouseTracking(true);
   setMaximumSize(30,30);
   setToolTip(getInfos()); 
-  
+  update();
   connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), 
         this, SLOT(ShowContextMenu(const QPoint &)));
   
@@ -83,6 +83,7 @@ NodeClass* NodeClass::electSlotLeader()
       //Tool tip settings
       next.first->setToolTip(next.first->getInfos());
       next.first->repaint();
+      update();
       setToolTip(getInfos());
       return next.first;
     }
@@ -126,7 +127,8 @@ bool NodeClass::createBlock(){
         blockChain->append(newBlock);
         stake += totalFees;
         electSlotLeader();
-        update();
+        newBlock->setParent(((MainWindow*)m_mw)->blockchainDraw);
+        ((MainWindow*)m_mw)->blockchainDraw->repaint();
         return true;
     }
     else{

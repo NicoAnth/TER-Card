@@ -23,52 +23,7 @@ int main (int argc, char **argv )
   window->firstNode->receiveTransactionRequest(window->firstUser->createTransaction(&blop,2));
   window->firstNode->receiveTransactionRequest(window->firstUser->createTransaction(&blop,3));
   
-  window->firstNode->createBlock();
-  window->firstNode->getBlockChain()->last()->setParent(window->blockchainDraw);
-  window->firstNode->createBlock();
-  window->firstNode->getBlockChain()->last()->setParent(window->blockchainDraw);
-  window->firstNode->createBlock();
-  window->firstNode->getBlockChain()->last()->setParent(window->blockchainDraw);
-  window->firstNode->createBlock();
-  window->firstNode->getBlockChain()->last()->setParent(window->blockchainDraw);
-  window->firstNode->createBlock();
-  window->firstNode->getBlockChain()->last()->setParent(window->blockchainDraw);
-
   window->show();
 
- /*  //Init
-  GenesisBlock geBlock;
-  QList <Block*> blockChain;
-  QList<Transaction> transaction;
-  blockChain.append(&geBlock);
-  User toto(geBlock),Lolo(geBlock);
-
-  //Give money
-  giveMoney(toto,1000);
-  giveMoney(Lolo,500);
-
-
-  //Create Node
-  NodeClass* firstNode = new NodeClass(&toto,blockChain, transaction,10);
-  firstNode->setSlotLeader(true);
-
-  //Create transact'
-  firstNode->receiveTransactionRequest(toto.createTransaction(&Lolo,50));
-  firstNode->receiveTransactionRequest(Lolo.createTransaction(&toto,20));
-  firstNode->receiveTransactionRequest(toto.createTransaction(&Lolo,40));
-
-  firstNode->createBlock();
-  firstNode->createBlock();
-
-  auto myWindow= new QWidget();
-  myWindow->setMinimumHeight(750);
-  myWindow->setMinimumWidth(1400);
-  myWindow->resize(1800,1000);
-  
-  QList<Block *>::iterator i;
-  for(i=firstNode->getBlockChain().begin();i!=firstNode->getBlockChain().end();++i){
-    (*(*i)).setParent(myWindow);
-  }
-  myWindow->show(); */
   return app.exec();
 }

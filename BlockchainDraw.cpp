@@ -22,6 +22,7 @@ void BlockchainDraw::paintEvent(QPaintEvent *){
         positionx += 150;
         p.drawRect(QRect(positionx,positiony,100,100));
         p.drawLine(QLine(positionx-50,positiony+50,positionx,positiony+50));
+        m_blockChain->at(i)->setParent(this);
     }
 }
 void BlockchainDraw::appendBlockchain(Block* blockToAppend){

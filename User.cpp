@@ -99,6 +99,14 @@ long long hashtoll(std::string hash){
   return std::stoll(sResult.substr(sResult.size()-5));
 }
 
+void User::setConnectedNode(NodeClass* cNode){
+  connectedNode = cNode;
+}
+
+void User::setConnectedPool(StakePool* cStakePool){
+  connectedPool= cStakePool;
+}
+
 void User::paintEvent(QPaintEvent *){
     QPainter painter(this);
     painter.setBrush(Qt::red);

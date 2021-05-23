@@ -21,6 +21,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    static int userLine;
     GenesisBlock* geBlock;
     QList <Block*> *blockchain;
     QList<Transaction> *ledger;

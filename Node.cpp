@@ -6,6 +6,7 @@
 #include <time.h>
 #include <QCryptographicHash>
 #include <qdebug.h>
+#include <QPainter>
 
 using namespace std;
 
@@ -36,6 +37,8 @@ NodeClass::NodeClass(User* m_owner,QList<Block*> *m_blockChain,QList <Transactio
   blockChain = m_blockChain;
   ledger= m_ledger;
   GenesisBlock& geBlock = dynamic_cast<GenesisBlock&> (*blockChain->first());
+  setCursor(Qt::PointingHandCursor);
+  setMaximumSize(30,30);
   geBlock.addStaker(this,m_stake);
   stake = m_stake;
   online = true;
@@ -163,4 +166,14 @@ long long NodeClass::signBlock(){
 
 void NodeClass::receiveTransactionRequest(Transaction t){
     ledger.append(t);
+}
+
+void NodeClass::paintEvent(QPaintEvent *){
+  QPainter painter(this);
+  QPen pen;
+  pen.setColor(Qt::black);
+  painter.setBrush(QColor(153,50,255));
+  painter.drawRect(QRect(0,0,30,30));
+  painter.setPen(pen);
+  painter.drawText(QRect(10,8,30,30),"N");
 }

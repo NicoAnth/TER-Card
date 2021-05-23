@@ -33,7 +33,7 @@ public:
     QGridLayout *gridLayout_2;
     QVBoxLayout *v1;
     QHBoxLayout *h1;
-    QHBoxLayout *h2;
+    QGridLayout *gl;
     QHBoxLayout *h3;
     QSpacerItem *horizontalSpacer;
     QPushButton *pushButton;
@@ -66,11 +66,11 @@ public:
 
         v1->addLayout(h1);
 
-        h2 = new QHBoxLayout();
-        h2->setObjectName(QString::fromUtf8("h2"));
-        h2->setContentsMargins(-1, -1, -1, 200);
+        gl = new QGridLayout();
+        gl->setObjectName(QString::fromUtf8("gl"));
+        gl->setContentsMargins(-1, -1, -1, 200);
 
-        v1->addLayout(h2);
+        v1->addLayout(gl);
 
         h3 = new QHBoxLayout();
         h3->setObjectName(QString::fromUtf8("h3"));
@@ -91,7 +91,7 @@ public:
         v1->addLayout(h3);
 
 
-        gridLayout_2->addLayout(v1, 0, 1, 1, 1);
+        gridLayout_2->addLayout(v1, 0, 0, 1, 1);
 
 
         gridLayout->addWidget(widget, 1, 0, 1, 1);

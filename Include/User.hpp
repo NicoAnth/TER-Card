@@ -28,6 +28,7 @@ class User: public QWidget {
     NodeClass* connectedNode;
     StakePool* connectedPool;
 
+
     //Constructor
     User(GenesisBlock& geBlock);
     ~User();
@@ -39,6 +40,9 @@ class User: public QWidget {
     void addUseableStakes(float addus);
     void addtotalStakes(float addts);
     void paintEvent(QPaintEvent *);
+
+    void setConnectedNode(NodeClass* cNode);
+    void setConnectedPool(StakePool* cStakePool);
 
 
   private:

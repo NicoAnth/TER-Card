@@ -50,6 +50,8 @@ public:
   }
   /* setter */
   void setSlotLeader(bool sl){isSlotLeader = sl;}
+
+  void paintEvent(QPaintEvent *);
 };
 
 #endif

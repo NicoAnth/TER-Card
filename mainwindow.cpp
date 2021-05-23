@@ -18,8 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
     blockchainDraw = new BlockchainDraw(blockchain);
     firstUser->connectedNode = firstNode;
     firstNode->setSlotLeader(true);
-    repaint();
-
+    firstUser->setToolTip(firstUser->getInfos());
     ui->widget->setMinimumSize(1000,600);
     ui->h1->addWidget(blockchainDraw);
     ui->gl->addWidget(firstUser,1,0);
@@ -37,7 +36,7 @@ MainWindow::~MainWindow()
 User* MainWindow::createUser(){
 
     User* newUser = new User(*geBlock);
-    ui->gl->addWidget(newUser,0,userLine);
+    ui->gl->addWidget(newUser,1,userLine);
     userLine++;
     return newUser;
 }

@@ -47,6 +47,8 @@ public:
   int getPositionx();
   int getPositiony();
 
+  QString getInfos();
+
 
 };
 #endif

@@ -4,6 +4,7 @@
 #include <QBrush>
 #include <QPaintEvent>
 #include <QSize>
+#include <QTextCodec>
 
 int Block::count = 0;
 
@@ -16,6 +17,7 @@ Block::Block(QByteArray hashPrev, long long slotLeaderSignature, QByteArray m_Ha
     positiony = lastBlockPosy;
     setCursor(Qt::PointingHandCursor);
     setGeometry(positionx,0,100,100);
+    setToolTip(getInfos());
     count += 1;
 
 }
@@ -49,6 +51,16 @@ int Block::getPositionx(){
 
 int Block::getPositiony(){
     return positiony;
+}
+
+QString Block::getInfos(){
+  QString infos="";
+  infos += "Signature du slot leader: " + QString::number(signature) + "\n";
+  
+  infos += "Hash:"+ hash_cur.toHex() +"\n";
+  infos += "Hash du bloc précédent:"+ hash_prev.toHex() +"\n";
+  
+  return infos;
 }
 
 /* void Block::paintEvent(QPaintEvent *){

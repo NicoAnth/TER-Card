@@ -43,6 +43,7 @@ NodeClass::NodeClass(User* m_owner,QList<Block*> *m_blockChain,QList <Transactio
   stake = m_stake;
   online = true;
   isSlotLeader = false;
+  setToolTip(getInfos());
   
 }
 
@@ -69,6 +70,9 @@ NodeClass* NodeClass::electSlotLeader()
     if(nextSlotLeader < sum ){
       this->isSlotLeader = false;
       next.first->isSlotLeader = true;
+      //Tool tip settings
+      next.first->setToolTip(next.first->getInfos());
+      setToolTip(getInfos());
       return next.first;
     }
   }
@@ -168,11 +172,30 @@ void NodeClass::receiveTransactionRequest(Transaction t){
     ledger.append(t);
 }
 
+QString NodeClass::getInfos(){
+  QString infos="";
+  infos += "Stake: " + QString::number(stake) + "\n";
+  if(online){
+    infos += "En ligne: oui \n";
+  }
+  else infos += "En ligne: non \n";
+
+  if(isSlotLeader){
+    infos += "Slot Leader: oui \n";
+  }
+  else infos += "Slot Leader: non \n";
+  
+  return infos;
+}
+
 void NodeClass::paintEvent(QPaintEvent *){
   QPainter painter(this);
   QPen pen;
   pen.setColor(Qt::black);
-  painter.setBrush(QColor(153,50,255));
+  if(isSlotLeader){
+    painter.setBrush(QColor(255,195,51));
+  }
+  else painter.setBrush(QColor(153,50,255));
   painter.drawRect(QRect(0,0,30,30));
   painter.setPen(pen);
   painter.drawText(QRect(10,8,30,30),"N");

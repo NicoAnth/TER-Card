@@ -52,6 +52,7 @@ public:
   void setSlotLeader(bool sl){isSlotLeader = sl;}
 
   void paintEvent(QPaintEvent *);
+  QString getInfos();
 };
 
 #endif

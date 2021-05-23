@@ -40,6 +40,7 @@ class User: public QWidget {
     void addUseableStakes(float addus);
     void addtotalStakes(float addts);
     void paintEvent(QPaintEvent *);
+    QString getInfos();
 
     void setConnectedNode(NodeClass* cNode);
     void setConnectedPool(StakePool* cStakePool);

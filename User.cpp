@@ -26,7 +26,10 @@ User::User(GenesisBlock& geblock)
   createKeys(publicKey,privateKey);
   geblock.addPublicKey(publicKey);
   connectedNode = NULL;
+  connectedPool = NULL;
   giveMoney(*this,1000);
+  setMouseTracking(true);
+  setToolTip(getInfos());
   setCursor(Qt::PointingHandCursor);
   setMaximumSize(30,30);
   count++;
@@ -40,9 +43,11 @@ const std::tuple<long long, long long, long long> User::getPrivateKey() const {
 
 void User::addUseableStakes(float addus){
   useableStakes += addus;
+  setToolTip(getInfos());
 }
 void User::addtotalStakes(float addts){
   totalStakes += addts;
+  setToolTip(getInfos());
 }
 
 Transaction User::createTransaction(User* m_receiver, int m_amount){
@@ -70,6 +75,7 @@ NodeClass* User::createNode(NodeClass onlineNode, int stake){
   }
   NodeClass* node = new NodeClass(this,onlineNode.getBlockChain(),onlineNode.getLedger(),stake);
   connectedNode = node;
+  setToolTip(getInfos());
   return node;
 }
 
@@ -85,6 +91,7 @@ void User::joinStakePool(StakePool& sp, int stake){
   }
   connectedPool = &sp;
   sp.addUser(this,stake);
+  setToolTip(getInfos());
 }
 
 long long hashtoll(std::string hash){
@@ -101,15 +108,35 @@ long long hashtoll(std::string hash){
 
 void User::setConnectedNode(NodeClass* cNode){
   connectedNode = cNode;
+  setToolTip(getInfos());
 }
 
 void User::setConnectedPool(StakePool* cStakePool){
   connectedPool= cStakePool;
+  setToolTip(getInfos());
+}
+
+QString User::getInfos(){
+  QString infos="";
+  infos += "Stakes totaux: " + QString::number(totalStakes) + "\n";
+  infos += "Stakes utilisables: " + QString::number(useableStakes)+"\n";
+  infos += "Stakes investis dans une pool stake: " + QString::number(pooledStakes)+"\n";
+  if(connectedNode != NULL){
+    infos += "Connecté à un noeud: oui \n";
+  }
+  else infos += "Connecté à un noeud: non \n";
+
+  if(connectedPool != NULL){
+    infos += "Connecté à une stake pool: oui \n";
+  }
+  else infos += "Connecté à une stake pool: non \n";
+  
+  return infos;
 }
 
 void User::paintEvent(QPaintEvent *){
     QPainter painter(this);
-    painter.setBrush(Qt::red);
+    painter.setBrush(QColor(0,204,102));
     painter.drawRect(QRect(0,0,30,30));
     painter.drawText(QRect(10,10,30,30),"U");
 }

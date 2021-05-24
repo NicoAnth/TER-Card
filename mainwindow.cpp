@@ -20,8 +20,9 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
     blockchainDraw = new BlockchainDraw(blockchain);
     firstUser->connectedNode = firstNode;
     firstUser->existingNodes->append(firstNode);
-    firstNode->setSlotLeader(true);
     firstUser->setToolTip(firstUser->getInfos());
+    firstNode->setSlotLeader(true);
+    firstNode->setToolTip(firstNode->getInfos());
     ui->widget->setMinimumSize(1000,600);
     ui->h1->addWidget(blockchainDraw);
     ui->gl->addWidget(firstUser,1,0);

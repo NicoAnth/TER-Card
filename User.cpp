@@ -11,6 +11,7 @@
 #include <QPushButton>
 #include <QFormLayout>
 #include <QSpinBox>
+#include <QDialog>
 
 class requireEnoughUseableStake: public std::exception{
   virtual const char* what() const throw()
@@ -68,6 +69,9 @@ Transaction User::createTransaction(User* m_receiver, int m_amount){
   long long ll = hashtoll(hashString);
   long long signature = encrypt(ll,publicKey,privateKey);
   t.setSignature(signature);
+  //Simulate ledger job (send to user address)
+  ((MainWindow*)m_mw)->firstNode->receiveTransactionRequest(t);
+  
   return t;
 }
 
@@ -135,7 +139,8 @@ void User::setConnectedPool(StakePool* cStakePool){
 }
 
 QString User::getInfos(){
-  QString infos="";
+
+  QString infos= "Identifiant: " + QString::number(id) + "\n";
   infos += "Stakes totaux: " + QString::number(totalStakes) + "\n";
   infos += "Stakes utilisables: " + QString::number(useableStakes)+"\n";
   infos += "Stakes investis dans une pool stake: " + QString::number(pooledStakes)+"\n";
@@ -159,19 +164,56 @@ void User::paintEvent(QPaintEvent *){
     painter.drawText(QRect(10,10,30,30),"U");
 }
 
+void User::transactionRequest(){
+  QDialog* transact = new QDialog(m_mw);
+  QFormLayout* mainLayout = new QFormLayout();
+  QHBoxLayout* hbLayout = new QHBoxLayout();
+  QPushButton* validate = new QPushButton("Validate");
+  QPushButton* exit = new QPushButton("Annuler");
+  transact->setWindowTitle("Nouvelle transaction");
+
+  QSpinBox* qsb1 = new QSpinBox();
+  qsb1->setMinimum(1);
+  qsb1->setMaximum(useableStakes);
+  QSpinBox* qsb2 = new QSpinBox();
+  qsb2->setMinimum(0);
+  qsb2->setMaximum(((MainWindow*)m_mw)->getUsers()->count()-1);
+
+  hbLayout->addWidget(validate);
+  hbLayout->addWidget(exit);
+  mainLayout->addRow(tr("&Identifiant du bénéficiaire:"), qsb2);
+  mainLayout->addRow(tr("&Montant de la transaction:"), qsb1);
+  mainLayout->addRow(hbLayout);
+  transact->setLayout(mainLayout);
+  connect(validate,&QPushButton::clicked,transact,&QDialog::accept);
+  connect(exit,&QPushButton::clicked,transact,&QDialog::reject);
+  connect(validate,&QPushButton::clicked,[=](){
+    QList<User*>::iterator it;
+    for(it=((MainWindow*)m_mw)->getUsers()->begin(); (*it)->id != qsb2->value(); ++it){}
+    createTransaction((*it),qsb1->value());
+    });
+  transact->exec();
+}
+
 void User::ShowContextMenu(const QPoint &pos){
+  
   QMenu contextMenu(tr("Context menu"), this);
   QAction action1("Créer un noeud", this);
+  QAction action2("Faire une transaction", this);
+  if(connectedNode == NULL){
+    contextMenu.addAction(&action1);
+  }
+  contextMenu.addAction(&action2);
   connect(&action1, SIGNAL(triggered()), this, SLOT(createNodeSettings()));
-  contextMenu.addAction(&action1);
+  connect(&action2, SIGNAL(triggered()), this, SLOT(transactionRequest()));
 
   contextMenu.exec(mapToGlobal(pos));
 }
 
 void User::createNodeSettings(){
-  QWidget* settingWindow = new QWidget();
+  QDialog* settingWindow = new QDialog();
   QFormLayout* mainLayout = new QFormLayout();
-  QPushButton* validate = new QPushButton("Validate");
+  QPushButton* validate = new QPushButton("Valider");
   QPushButton* exit = new QPushButton("Annuler");
   settingWindow->setFixedSize(250,110);
   settingWindow->setWindowTitle("Nouveau noeud");
@@ -190,3 +232,4 @@ void User::createNodeSettings(){
   connect(validate,&QPushButton::clicked,settingWindow,&QWidget::close);
   connect(exit,&QPushButton::clicked,settingWindow,&QWidget::close);  
 }
+

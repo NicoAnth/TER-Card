@@ -28,8 +28,10 @@ public:
     User *firstUser;
     NodeClass *firstNode;
     BlockchainDraw *blockchainDraw;
+    QList<User*>* users;
     Ui::MainWindow* getUi();
     void addNode(NodeClass* node, User* user);
+    QList<User*> * getUsers();
 private:
     Ui::MainWindow *ui;
     

@@ -142,7 +142,9 @@ void NodeClass::execTransaction(User* sender, User* receiver, int amount, float 
   sender->useableStakes -= amount+fees;
   sender->totalStakes -= amount+fees;
   receiver->useableStakes += amount;
-  receiver->totalStakes -= amount;
+  receiver->totalStakes += amount;
+  sender->setToolTip(sender->getInfos());
+  receiver->setToolTip(receiver->getInfos());
 }
 
 bool NodeClass::verifySignature( User* m_user,Transaction t, long long encryptedHash){
@@ -183,6 +185,7 @@ long long NodeClass::signBlock(){
 
 void NodeClass::receiveTransactionRequest(Transaction t){
     ledger.append(t);
+    
 }
 
 QString NodeClass::getInfos(){

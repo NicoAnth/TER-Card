@@ -49,13 +49,13 @@ class User: public QWidget {
     void setConnectedNode(NodeClass* cNode);
     void setConnectedPool(StakePool* cStakePool);
 
-
   private:
    std::tuple<long long, long long, long long> privateKey;
 
   public slots:
     void ShowContextMenu(const QPoint &pos);
     void createNodeSettings();
+    void transactionRequest();
 };
 
 inline bool operator <(const User &u, const User &u2){

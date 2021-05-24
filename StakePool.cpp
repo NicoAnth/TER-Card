@@ -1,18 +1,17 @@
+
 #include "Include/StakePool.hpp"
+#include <QPainter>
 
+StakePool::StakePool(User* m_owner,QList<Block*> *m_blockChain,QList <Transaction> m_ledger, int stake,QMainWindow* mw):
+NodeClass(m_owner,m_blockChain,m_ledger,stake,mw), pledge(1){}
 
-User* StakePool::getOwner()
+int StakePool::addUser(User* newMember, int stakes)
 {
-  return poolOwner;
-}
-
-int StakePool::addUser(User* newMember, int stake)
-{
-  if(newMember->useableStakes >= stake+pledge){
-    enrolled.insert(newMember,stake);
-    stakes += stake;
-    newMember->useableStakes -= stake + pledge;
-    newMember->pooledStakes += stake;
+  if(newMember->useableStakes >= stakes+pledge){
+    enrolled.insert(newMember,stakes);
+    stake += stakes;
+    newMember->useableStakes -= stakes + pledge;
+    newMember->pooledStakes += stakes;
     return 1;
   }
   else return 0;
@@ -29,9 +28,9 @@ int StakePool::updateUser(User* member, int newStake)
 {
   if(member->useableStakes >= newStake){
     int diffStake = newStake - enrolled.find(member).value();
-    stakes -= enrolled.find(member).value();
+    stake -= enrolled.find(member).value();
     enrolled.insert(member, newStake);
-    stakes += newStake + pledge;
+    stake += newStake + pledge;
     member->useableStakes -= diffStake + pledge;
     member->pooledStakes += diffStake;
     return 1;
@@ -41,4 +40,17 @@ int StakePool::updateUser(User* member, int newStake)
 
 void StakePool::setPledge(int vpledge){
   pledge = vpledge;
+}
+
+void StakePool::paintEvent(QPaintEvent *){
+  QPainter painter(this);
+  QPen pen;
+  pen.setColor(Qt::black);
+  if(isSlotLeader){
+    painter.setBrush(QColor(255,195,51));
+  }
+  else painter.setBrush(QColor(224,80,142));
+  painter.drawRect(QRect(0,0,30,30));
+  painter.setPen(pen);
+  painter.drawText(QRect(7,8,30,30),"SP");
 }

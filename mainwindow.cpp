@@ -1,6 +1,7 @@
 #include "Include/mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Include/Simulation.hpp"
+#include "Include/StakePool.hpp"
 #include <QSpacerItem>
 
 int MainWindow::userLine =1;
@@ -49,6 +50,11 @@ User* MainWindow::createUser(){
 void MainWindow::addNode(NodeClass* node, User* user){
     ui->gl->addWidget(node,0,user->m_graphicLine);
 }
+
+void MainWindow::addStakePool(StakePool* sp, User* user){
+    ui->gl->addWidget(sp,0,user->m_graphicLine);
+}
+
 QList<User*>* MainWindow::getUsers(){
      return users;
  }

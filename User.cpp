@@ -101,6 +101,33 @@ NodeClass* User::createNode(int stake){
   return node;
 }
 
+StakePool* User::createStakePool(int stake){
+  
+  QList<NodeClass*>::iterator it;
+  for(it = existingNodes->begin(); (*it)->isOnline() != true;++it){}
+  NodeClass* onlineNode = *it;
+
+  try{
+    if(stake<useableStakes || *it == NULL){
+      throw reus; 
+    }
+    if(connectedNode != NULL){
+      throw reus;
+    }
+  }
+  catch(exception &e){
+    cout << e.what() << '\n';
+  }
+  StakePool* sp = new StakePool(this,onlineNode->getBlockChain(),onlineNode->getLedger(),stake,m_mw);
+  useableStakes-= stake;
+  connectedPool = sp;
+  existingNodes->append(sp);
+  ((MainWindow*)m_mw)->addStakePool(sp,this);
+  setToolTip(getInfos());
+  return sp;
+}
+
+
 void User::joinStakePool(StakePool& sp, int stake){
   
   try{
@@ -199,13 +226,16 @@ void User::ShowContextMenu(const QPoint &pos){
   
   QMenu contextMenu(tr("Context menu"), this);
   QAction action1("Créer un noeud", this);
-  QAction action2("Faire une transaction", this);
+  QAction action2("Créer une stake pool", this);
+  QAction action3("Faire une transaction", this);
   if(connectedNode == NULL){
     contextMenu.addAction(&action1);
   }
   contextMenu.addAction(&action2);
+  contextMenu.addAction(&action3);
   connect(&action1, SIGNAL(triggered()), this, SLOT(createNodeSettings()));
-  connect(&action2, SIGNAL(triggered()), this, SLOT(transactionRequest()));
+  connect(&action2, SIGNAL(triggered()), this, SLOT(createStakePoolSettings()));
+  connect(&action3, SIGNAL(triggered()), this, SLOT(transactionRequest()));
 
   contextMenu.exec(mapToGlobal(pos));
 }
@@ -232,4 +262,28 @@ void User::createNodeSettings(){
   connect(validate,&QPushButton::clicked,settingWindow,&QWidget::close);
   connect(exit,&QPushButton::clicked,settingWindow,&QWidget::close);  
 }
+
+void User::createStakePoolSettings(){
+  QDialog* settingWindow = new QDialog();
+  QFormLayout* mainLayout = new QFormLayout();
+  QPushButton* validate = new QPushButton("Valider");
+  QPushButton* exit = new QPushButton("Annuler");
+  settingWindow->setFixedSize(250,110);
+  settingWindow->setWindowTitle("Nouvelle Stake Pool");
+  settingWindow->move(m_mw->pos().x()+m_mw->width()/2-150,m_mw->pos().y()+m_mw->height()/2-50);
+
+  QSpinBox* qsb = new QSpinBox();
+  qsb->setMinimum(10);
+  qsb->setMaximum(useableStakes);
+  mainLayout->addRow(tr("&Stake de départ:"), qsb);
+  mainLayout->addWidget(validate);
+  mainLayout->addWidget(exit);
+  settingWindow->setLayout(mainLayout);
+  settingWindow->show();
+  
+  connect(validate,&QPushButton::clicked,[=](){createStakePool(qsb->value());});
+  connect(validate,&QPushButton::clicked,settingWindow,&QWidget::close);
+  connect(exit,&QPushButton::clicked,settingWindow,&QWidget::close);  
+}
+
 

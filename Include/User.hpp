@@ -40,6 +40,7 @@ class User: public QWidget {
     std::tuple<long long, long long, long long> const getPrivateKey() const;
     Transaction createTransaction(User* m_receiver, int m_amount);
     NodeClass* createNode(int amount = 10);
+    StakePool* createStakePool(int amount = 10);
     void joinStakePool(StakePool& sp, int stake);
     void addUseableStakes(float addus);
     void addtotalStakes(float addts);
@@ -55,6 +56,7 @@ class User: public QWidget {
   public slots:
     void ShowContextMenu(const QPoint &pos);
     void createNodeSettings();
+    void createStakePoolSettings();
     void transactionRequest();
 };
 

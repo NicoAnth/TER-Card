@@ -30,8 +30,9 @@ public:
     BlockchainDraw *blockchainDraw;
     QList<User*>* users;
     Ui::MainWindow* getUi();
-    void addNode(NodeClass* node, User* user);
     QList<User*> * getUsers();
+    void addNode(NodeClass* node, User* user);
+    void addStakePool(StakePool* sp, User* user);
 private:
     Ui::MainWindow *ui;
     

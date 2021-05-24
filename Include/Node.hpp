@@ -15,7 +15,7 @@ class StakePool;
 
 class NodeClass:public QWidget {
     Q_OBJECT
-private:
+protected:
 
   const User* owner;
   const int minimalStake = MINIMAL_STAKE;

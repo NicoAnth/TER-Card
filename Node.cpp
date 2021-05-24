@@ -123,11 +123,10 @@ bool NodeClass::createBlock(){
         totalFees += i->getFees();
       }
         Block* newBlock = new Block((*blockChain->last()).getHash(),signBlock(),computeLastBlockHash(),blockTransaction,
-        (*blockChain->last()).getPositionx(),(*blockChain->last()).getPositiony());
+        (*blockChain->last()).getPositionx(),(*blockChain->last()).getPositiony(),((MainWindow*)m_mw)->blockchainDraw);
         blockChain->append(newBlock);
         stake += totalFees;
         electSlotLeader();
-        newBlock->setParent(((MainWindow*)m_mw)->blockchainDraw);
         ((MainWindow*)m_mw)->blockchainDraw->repaint();
         return true;
     }

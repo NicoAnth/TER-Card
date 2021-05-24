@@ -5,19 +5,22 @@
 #include <QPaintEvent>
 #include <QSize>
 #include <QTextCodec>
+#include <qdebug.h>
 
 int Block::count = 0;
 
 
 Block::Block():signature(0){};
 
-Block::Block(QByteArray hashPrev, long long slotLeaderSignature, QByteArray m_Hash,QList<Transaction> m_transactionList,int lastPosx, int lastPosy): signature(slotLeaderSignature),hash_prev(hashPrev), transactionList(m_transactionList),id(count),hash_cur(m_Hash),lastBlockPosx(lastPosx),lastBlockPosy(lastPosy){
+Block::Block(QByteArray hashPrev, long long slotLeaderSignature, QByteArray m_Hash,QList<Transaction> m_transactionList,int lastPosx, int lastPosy,QWidget *parent): signature(slotLeaderSignature),hash_prev(hashPrev), transactionList(m_transactionList),id(count),hash_cur(m_Hash),lastBlockPosx(lastPosx),lastBlockPosy(lastPosy), QWidget(parent){
 
     positionx = lastBlockPosx + 150;
     positiony = lastBlockPosy;
     setCursor(Qt::PointingHandCursor);
+    setMinimumSize(100,100);
     setGeometry(positionx,0,100,100);
     setToolTip(getInfos());
+    setVisible(true);
     count += 1;
 
 }
@@ -63,9 +66,3 @@ QString Block::getInfos(){
   return infos;
 }
 
-/* void Block::paintEvent(QPaintEvent *){
-    QPainter p(this);
-    p.setBrush(Qt::blue);
-    p.drawRect(QRect(positionx,positiony,100,100));
-    p.drawLine(QLine(lastBlockPosx+100,lastBlockPosy+50,positionx,positiony+50));
-} */

@@ -5,6 +5,7 @@
 #include <QList>
 #include <QLayout>
 #include <QWidget>
+#include <QPaintEvent>
 
 class Block: public QWidget {
 
@@ -31,7 +32,7 @@ public:
 
   //Constructor
   Block();
-  Block(QByteArray hashPrev,long long slotLeaderSignature, QByteArray m_Hash,QList<Transaction> m_transactionList, int lastposX, int lastposY);
+  Block(QByteArray hashPrev,long long slotLeaderSignature, QByteArray m_Hash,QList<Transaction> m_transactionList, int lastposX, int lastposY,QWidget *parent=nullptr);
   virtual ~Block(){}
 
   /* getter */
@@ -43,12 +44,10 @@ public:
 
   /* Qt */
 
-  //void paintEvent(QPaintEvent *);
   int getPositionx();
   int getPositiony();
 
   QString getInfos();
-
 
 };
 #endif

@@ -187,6 +187,9 @@ void NodeClass::receiveTransactionRequest(Transaction t){
     ledger.append(t);
     
 }
+void NodeClass::addStake(float nStake){
+  stake +=nStake;
+}
 
 QString NodeClass::getInfos(){
   QString infos="";

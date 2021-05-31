@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_User_t {
-    QByteArrayData data[7];
-    char stringdata0[88];
+    QByteArrayData data[8];
+    char stringdata0[111];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,11 +37,13 @@ QT_MOC_LITERAL(2, 21, 0), // ""
 QT_MOC_LITERAL(3, 22, 3), // "pos"
 QT_MOC_LITERAL(4, 26, 18), // "createNodeSettings"
 QT_MOC_LITERAL(5, 45, 23), // "createStakePoolSettings"
-QT_MOC_LITERAL(6, 69, 18) // "transactionRequest"
+QT_MOC_LITERAL(6, 69, 18), // "transactionRequest"
+QT_MOC_LITERAL(7, 88, 22) // "transferToNodeSettings"
 
     },
     "User\0ShowContextMenu\0\0pos\0createNodeSettings\0"
-    "createStakePoolSettings\0transactionRequest"
+    "createStakePoolSettings\0transactionRequest\0"
+    "transferToNodeSettings"
 };
 #undef QT_MOC_LITERAL
 
@@ -51,7 +53,7 @@ static const uint qt_meta_data_User[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -59,13 +61,15 @@ static const uint qt_meta_data_User[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   34,    2, 0x0a /* Public */,
-       4,    0,   37,    2, 0x0a /* Public */,
-       5,    0,   38,    2, 0x0a /* Public */,
-       6,    0,   39,    2, 0x0a /* Public */,
+       1,    1,   39,    2, 0x0a /* Public */,
+       4,    0,   42,    2, 0x0a /* Public */,
+       5,    0,   43,    2, 0x0a /* Public */,
+       6,    0,   44,    2, 0x0a /* Public */,
+       7,    0,   45,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::QPoint,    3,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -83,6 +87,7 @@ void User::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
         case 1: _t->createNodeSettings(); break;
         case 2: _t->createStakePoolSettings(); break;
         case 3: _t->transactionRequest(); break;
+        case 4: _t->transferToNodeSettings(); break;
         default: ;
         }
     }
@@ -117,13 +122,13 @@ int User::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 5)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 4;
+        _id -= 5;
     }
     return _id;
 }

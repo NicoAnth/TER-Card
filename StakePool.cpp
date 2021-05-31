@@ -1,5 +1,6 @@
 
 #include "Include/StakePool.hpp"
+#include "Include/mainwindow.h"
 #include <QPainter>
 
 StakePool::StakePool(User* m_owner,QList<Block*> *m_blockChain,QList <Transaction> m_ledger, int stake,QMainWindow* mw):
@@ -12,6 +13,7 @@ int StakePool::addUser(User* newMember, int stakes)
     stake += stakes;
     newMember->useableStakes -= stakes + pledge;
     newMember->pooledStakes += stakes;
+    ((MainWindow*)m_mw)->addUserToSP(this,newMember);
     return 1;
   }
   else return 0;

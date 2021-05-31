@@ -55,6 +55,7 @@ public:
   }
   /* setter */
   void setSlotLeader(bool sl){isSlotLeader = sl;}
+  void addStake(float nstake);
 
   void paintEvent(QPaintEvent *);
   QString getInfos();

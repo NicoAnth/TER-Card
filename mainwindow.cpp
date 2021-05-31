@@ -53,6 +53,12 @@ void MainWindow::addNode(NodeClass* node, User* user){
 
 void MainWindow::addStakePool(StakePool* sp, User* user){
     ui->gl->addWidget(sp,0,user->m_graphicLine);
+    sp->m_graphicLine = user->m_graphicLine;
+}
+
+void MainWindow::addUserToSP(StakePool* sp, User* user){
+    ui->gl->addWidget(user,sp->enrolled.count()+2,sp->m_graphicLine);
+    update();
 }
 
 QList<User*>* MainWindow::getUsers(){

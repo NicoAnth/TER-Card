@@ -13,6 +13,7 @@ public:
   StakePool(User* m_owner,QList<Block*> *m_blockChain,QList <Transaction> m_ledger, int stake,QMainWindow* mw);
   QMap<User*,int> enrolled;
   int pledge;
+  int m_graphicLine;
   //Return 1 on success, 0 on error
   int addUser(User* newMember, int stake);
   void removeUser(User* newMember);

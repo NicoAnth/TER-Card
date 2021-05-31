@@ -222,20 +222,38 @@ void User::transactionRequest(){
   transact->exec();
 }
 
+void User::addAssetToNode(float number){
+  if(useableStakes > number){
+    connectedNode->addStake(number);
+    useableStakes -=number;
+  }
+  else{
+    qDebug()<<"user doesnt own enough stake to perform this operation";
+  }
+  connectedNode->setToolTip(connectedNode->getInfos());
+  setToolTip(getInfos());
+}
+
 void User::ShowContextMenu(const QPoint &pos){
   
   QMenu contextMenu(tr("Context menu"), this);
   QAction action1("Créer un noeud", this);
   QAction action2("Créer une stake pool", this);
   QAction action3("Faire une transaction", this);
+  QAction action4("Transférer sur le node", this);
+
   if(connectedNode == NULL){
     contextMenu.addAction(&action1);
+  }
+  else{
+    contextMenu.addAction(&action4);
   }
   contextMenu.addAction(&action2);
   contextMenu.addAction(&action3);
   connect(&action1, SIGNAL(triggered()), this, SLOT(createNodeSettings()));
   connect(&action2, SIGNAL(triggered()), this, SLOT(createStakePoolSettings()));
   connect(&action3, SIGNAL(triggered()), this, SLOT(transactionRequest()));
+  connect(&action4,SIGNAL(triggered()) , this, SLOT(transferToNodeSettings()));
 
   contextMenu.exec(mapToGlobal(pos));
 }
@@ -286,4 +304,26 @@ void User::createStakePoolSettings(){
   connect(exit,&QPushButton::clicked,settingWindow,&QWidget::close);  
 }
 
+void User::transferToNodeSettings(){
+  QDialog* settingWindow = new QDialog();
+  QFormLayout* mainLayout = new QFormLayout();
+  QPushButton* validate = new QPushButton("Valider");
+  QPushButton* exit = new QPushButton("Annuler");
+  settingWindow->setFixedSize(250,110);
+  settingWindow->setWindowTitle("Transfert vers le noeud");
+  settingWindow->move(m_mw->pos().x()+m_mw->width()/2-150,m_mw->pos().y()+m_mw->height()/2-50);
+
+  QSpinBox* qsb = new QSpinBox();
+  qsb->setMinimum(1);
+  qsb->setMaximum(useableStakes);
+  mainLayout->addRow(tr("&Montant du transfert:"), qsb);
+  mainLayout->addWidget(validate);
+  mainLayout->addWidget(exit);
+  settingWindow->setLayout(mainLayout);
+  settingWindow->show();
+  
+  connect(validate,&QPushButton::clicked,[=](){addAssetToNode(qsb->value());});
+  connect(validate,&QPushButton::clicked,settingWindow,&QWidget::close);
+  connect(exit,&QPushButton::clicked,settingWindow,&QWidget::close);  
+}
 

@@ -45,6 +45,7 @@ class User: public QWidget {
     void addUseableStakes(float addus);
     void addtotalStakes(float addts);
     void paintEvent(QPaintEvent *);
+    void addAssetToNode(float number);
     QString getInfos();
 
     void setConnectedNode(NodeClass* cNode);
@@ -58,6 +59,7 @@ class User: public QWidget {
     void createNodeSettings();
     void createStakePoolSettings();
     void transactionRequest();
+    void transferToNodeSettings();
 };
 
 inline bool operator <(const User &u, const User &u2){

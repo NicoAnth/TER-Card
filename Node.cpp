@@ -28,7 +28,7 @@ QList <Block*> *init_blockChain;
 QList <Block*>* NodeClass::blockChain = init_blockChain;
 QList <Transaction> NodeClass::ledger = ledg;
 
-NodeClass::NodeClass(User* m_owner,QList<Block*> *m_blockChain,QList <Transaction> m_ledger, int m_stake,QMainWindow* mw):owner(m_owner),m_mw(mw){
+NodeClass::NodeClass(User* m_owner,QList<Block*> *m_blockChain,QList <Transaction> m_ledger, float m_stake,QMainWindow* mw):owner(m_owner),m_mw(mw){
   
   try{
     if(m_stake < MINIMAL_STAKE){
@@ -60,22 +60,22 @@ NodeClass::NodeClass(User* m_owner,QList<Block*> *m_blockChain,QList <Transactio
 NodeClass* NodeClass::electSlotLeader()
 {
   GenesisBlock& geBlock = dynamic_cast<GenesisBlock&> (*blockChain->first());
-  QListIterator<std::pair<NodeClass*,int>> i(geBlock.getStakers());
-  int sum=0;
+  QListIterator<std::pair<NodeClass*,float>> i(geBlock.getStakers());
+  float sum=0;
 
   srand (time(NULL));
 
-  int totalStake=0;
+  float totalStake=0;
   while(i.hasNext()){
     totalStake += i.next().second;
   }
 
-  int nextSlotLeader = rand() % (totalStake + 1 - 0) + 0;
+  int nextSlotLeader = rand() % (static_cast<int>(totalStake) + 1 - 0) + 0;
 
   i.toFront();
   while(i.hasNext())
   { 
-    std::pair<NodeClass*,int> next = i.next();
+    std::pair<NodeClass*,float> next = i.next();
     sum += next.second;
     if(nextSlotLeader < sum ){
       this->isSlotLeader = false;
@@ -116,7 +116,7 @@ bool NodeClass::createBlock(){
     if(isSlotLeader == true && slotLeaderVerification()){
       QList<Transaction> blockTransaction;
       QList<Transaction>::iterator i;
-      int totalFees=0;
+      float totalFees=0;
       for(i=(ledger.begin()+ledger.size())-TRANSACTION_MAX;i!= ledger.end();++i){
         execTransaction(i->getSender(),i->getReceiver(),i->getAmount(),i->getFees());
         blockTransaction.append(*i);
@@ -126,6 +126,7 @@ bool NodeClass::createBlock(){
         (*blockChain->last()).getPositionx(),(*blockChain->last()).getPositiony(),((MainWindow*)m_mw)->blockchainDraw);
         blockChain->append(newBlock);
         stake += totalFees;
+        setToolTip(getInfos());
         electSlotLeader();
         ((MainWindow*)m_mw)->blockchainDraw->repaint();
         return true;

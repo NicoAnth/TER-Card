@@ -27,7 +27,7 @@ public:
   User* getSender();
   User* getReceiver();
   int getAmount();
-  int getFees();
+  float getFees();
   
   /* Setter */
   void setSignature(long long signature);

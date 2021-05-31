@@ -19,7 +19,7 @@ protected:
 
   const User* owner;
   const int minimalStake = MINIMAL_STAKE;
-  int stake;
+  float stake;
   static QList<Block*>* blockChain;
   static QList <Transaction> ledger;
   bool online;
@@ -30,7 +30,7 @@ protected:
 public:
 
   /* Constructor */
-  NodeClass(User* m_owner,QList<Block*> *m_blockChain,QList <Transaction> m_ledger, int stake,QMainWindow* mw);
+  NodeClass(User* m_owner,QList<Block*> *m_blockChain,QList <Transaction> m_ledger, float stake,QMainWindow* mw);
 
   /* Slot leader methods */
   NodeClass* electSlotLeader();

@@ -1,7 +1,8 @@
 # Ouroboros Coin
 
 Welcome to Ouroboros Coin, a cryptocurrency simulation application developed by Nicolas Anthène and Lucas Leubret and inspired by the Ouroboros proof-of-stake protocol used by Cardano. This application was developed for educational purposes and allows you to reproduce actions related to a cryptocurrency and visualize different aspects of it on a blockchain.
-Features
+
+## Features
 
     - Creation of user accounts and virtual wallets
     - Currency exchange between users
@@ -22,7 +23,7 @@ Ouroboros Coin was developed in C using the Qt framework. In order to run the ap
     - Create an account by providing a username
     - Create a virtual wallet by generating a public/private key pair using RSA encryption
     - Exchange currency with other users or validate transactions as a validator (if you have been selected according to the Ouroboros protocol)
-    View the history of your transactions and the balance of your account on the blockchain
+    - View the history of your transactions and the balance of your account on the blockchain
 
 ## Contributions
 
